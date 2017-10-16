@@ -1,0 +1,156 @@
+#pageLoader
+{
+    background: rgba( 0, 0, 0, 0.7 );
+    display: none;
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    z-index: 999999;
+}
+
+#pageLoader i
+{
+    left: 50%;
+    margin-left: -32px;
+    margin-top: -32px;
+    position: absolute;
+    top: 50%;
+    color: #ffffff;
+}
+
+.primary-opacity{
+    background-color: rgba(255,255,255,.8)!important;
+}
+.boldText{
+    font-weight: bold;
+}
+
+.headerError{
+    background: #F2DEDE;
+    color: #8b0000;
+}
+
+.text-white{
+    color: #ffffff;
+}
+
+#lbl_time{
+    font-size: 14px;
+}
+
+.label-icon {
+    padding: 4px;
+    border-radius: 2px;
+    line-height: 1;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    font-size: 12px!important;
+    padding: 2px;
+}
+
+.panel-title>a {
+    outline: none;
+    text-decoration: none;
+    color: #ffffff;
+}
+.panel-title>a:hover, .panel-title>a:active, .panel-title>a:focus {
+    outline: none;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+[class^="bg-"], [class*="bg-"] {
+    color: #ffffff!important;
+}
+[class^="bg-white"], [class*="bg-white"] {
+    color: #636b6f!important;
+}
+
+[class^="ui-pnotify"], [class*="ui-pnotify"] {
+    color: #636b6f!important;
+}
+
+.div_padding{
+    padding: 5px!important;
+}
+.div_padding_min{
+    padding-bottom: 3px!important;
+
+}
+
+.bg-primary-custom {
+    background-color: #3097D1;
+    border-color: #3097D1;
+    color: #fff;
+}
+
+.text-left-important{
+    text-align: left !important;;
+}
+
+.text-font-like{
+    font-size: 18px
+}
+
+
+label.text-primary>span + i{
+    cursor: pointer;
+}
+span.username>i{
+    cursor: pointer;
+}
+
+
+.paginate_button{
+    cursor: pointer;
+}
+
+.normalText{
+    font-weight: 400;
+}
+
+.table-condensed>thead>tr>th{
+    background: #ffffff !important;
+    color: #000000;
+    padding: 4px!important;
+}
+
+
+.table-condensed>thead>tr {
+    background: #ffffff !important;
+}
+
+.ugcore-file{
+    background-color: #367FA9;
+    color: white!important;
+    font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: inline-block;
+    padding: 10px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+
+.ugcore-file-picker{
+    background-color: #367FA9;
+    color: white!important;
+    font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+
+.ugcore-file-picker + [type='file']{
+    display: none;
+}
+
+.paddingFormLeft
+{
+    padding-left: 0px;
+}
+.paddingFormRight
+{
+    padding-right: 0px;
+}
