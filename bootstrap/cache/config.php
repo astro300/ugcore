@@ -184,7 +184,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\laragon\\www\\ugcore1\\storage\\framework/cache/data',
+        'path' => 'C:\\laragon\\www\\ugcore\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -491,10 +491,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'DOMPDF_FONT_DIR' => 'C:\\laragon\\www\\ugcore1\\storage\\fonts/',
-      'DOMPDF_FONT_CACHE' => 'C:\\laragon\\www\\ugcore1\\storage\\fonts/',
+      'DOMPDF_FONT_DIR' => 'C:\\laragon\\www\\ugcore\\storage\\fonts/',
+      'DOMPDF_FONT_CACHE' => 'C:\\laragon\\www\\ugcore\\storage\\fonts/',
       'DOMPDF_TEMP_DIR' => 'C:\\Users\\DELL\\AppData\\Local\\Temp',
-      'DOMPDF_CHROOT' => 'C:\\laragon\\www\\ugcore1',
+      'DOMPDF_CHROOT' => 'C:\\laragon\\www\\ugcore',
       'DOMPDF_UNICODE_ENABLED' => true,
       'DOMPDF_ENABLE_FONT_SUBSETTING' => false,
       'DOMPDF_PDF_BACKEND' => 'CPDF',
@@ -519,12 +519,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\laragon\\www\\ugcore1\\storage\\app',
+        'root' => 'C:\\laragon\\www\\ugcore\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\laragon\\www\\ugcore1\\storage\\app/public',
+        'root' => 'C:\\laragon\\www\\ugcore\\storage\\app/public',
         'url' => 'http://siug.ug.edu.ec/storage',
         'visibility' => 'public',
       ),
@@ -596,7 +596,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\laragon\\www\\ugcore1\\resources\\views/vendor/mail',
+        0 => 'C:\\laragon\\www\\ugcore\\resources\\views/vendor/mail',
       ),
     ),
     'stream' => 
@@ -699,7 +699,7 @@
     'lifetime' => 30,
     'expire_on_close' => true,
     'encrypt' => false,
-    'files' => 'C:\\laragon\\www\\ugcore1\\storage\\framework/sessions',
+    'files' => 'C:\\laragon\\www\\ugcore\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -730,8 +730,8 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\laragon\\www\\ugcore1\\resources\\views',
+      0 => 'C:\\laragon\\www\\ugcore\\resources\\views',
     ),
-    'compiled' => 'C:\\laragon\\www\\ugcore1\\storage\\framework\\views',
+    'compiled' => 'C:\\laragon\\www\\ugcore\\storage\\framework\\views',
   ),
 );
