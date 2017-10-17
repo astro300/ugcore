@@ -3686,7 +3686,7 @@ return array(
     'UGCore\\Core\\Repositories\\Uath\\HorasExtrasRepository' => $baseDir . '/app/Core/Repositories/Uath/HorasExtrasRepository.php',
     'UGCore\\Core\\Repositories\\Uath\\RegistroRepository' => $baseDir . '/app/Core/Repositories/Uath/RegistroRepository.php',
     'UGCore\\Core\\Repositories\\Uath\\ReportesRepository' => $baseDir . '/app/Core/Repositories/Uath/ReportesRepository.php',
-    'UGCore\\Core\\Respositories\\Titulacion\\ExamenComplexivoRepository' => $baseDir . '/app/Core/Repositories/Titulacion/ExamenComplexivoRepository.php',
+    'UGCore\\Core\\Respositories\\Titulacion\\ECExamenComplexivoRepository' => $baseDir . '/app/Core/Repositories/Titulacion/ECExamenComplexivoRepository.php',
     'UGCore\\Core\\Respositories\\Titulacion\\MTTitulacionRepository' => $baseDir . '/app/Core/Repositories/Titulacion/MTTitulacionRepository.php',
     'UGCore\\Core\\Respositories\\Titulacion\\MTrabajoInscripcionRepository' => $baseDir . '/app/Core/Repositories/Titulacion/MTrabajoInscripcionRepository.php',
     'UGCore\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',

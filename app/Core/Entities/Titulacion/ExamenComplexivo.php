@@ -6,16 +6,32 @@ use UGCore\Core\Entities\CoreModel;
 
 class ExamenComplexivo extends CoreModel
 {
-    protected $connection = "sqlsrv_BdTitulacion";
+    protected $connection = "sqlsrv_bdacademico";
 
-    protected $table = "TB_TIT_EXAMEN_COMPLEXIVO";
+    protected $table = "TB_EXAMEN_GRACIA";
 
-    protected $fillable=['MATRICULA_ID','NOTA_COMPLEXIVO','NOTA_GRACIA','OBSERVACION'];
+    protected $fillable=['COD_ESTUDIANTE'
+                        ,'NOTA'
+                        ,'FECHA'
+                        ,'NOMBRE_MATERIA'
+                        ,'COD_CARRERA'
+                        ,'OBSERVACION'
+                        ,'RESPONSA1'
+                        ,'FECSYS1'
+                        ,'COD_MATERIA'
+                        ,'COD_PLECTIVO'
+                        ,'ESTADO'
+                        ,'TIPO'
+                        ,'NIVEL'
+                        ,'VEZ'
+                        ,'RECUP'
+                        ,'REP_INASIST'
+                        ,'NOTAC'];
 
-    protected $primaryKey = 'N_ID';
+    protected $primaryKey = 'NUM_SECUENCIA';
 
     //relacion con tabla datos
-    public function MATRICULA()
+    public function matricula()
     {
         return $this->belongsTo(Matricula::class,'MATRICULA_ID','N_ID');
     }

@@ -4125,7 +4125,7 @@ class ComposerStaticInit1b1d5ca017d2e775ff3f037d54dfbc12
         'UGCore\\Core\\Repositories\\Uath\\HorasExtrasRepository' => __DIR__ . '/../..' . '/app/Core/Repositories/Uath/HorasExtrasRepository.php',
         'UGCore\\Core\\Repositories\\Uath\\RegistroRepository' => __DIR__ . '/../..' . '/app/Core/Repositories/Uath/RegistroRepository.php',
         'UGCore\\Core\\Repositories\\Uath\\ReportesRepository' => __DIR__ . '/../..' . '/app/Core/Repositories/Uath/ReportesRepository.php',
-        'UGCore\\Core\\Respositories\\Titulacion\\ExamenComplexivoRepository' => __DIR__ . '/../..' . '/app/Core/Repositories/Titulacion/ExamenComplexivoRepository.php',
+        'UGCore\\Core\\Respositories\\Titulacion\\ECExamenComplexivoRepository' => __DIR__ . '/../..' . '/app/Core/Repositories/Titulacion/ECExamenComplexivoRepository.php',
         'UGCore\\Core\\Respositories\\Titulacion\\MTTitulacionRepository' => __DIR__ . '/../..' . '/app/Core/Repositories/Titulacion/MTTitulacionRepository.php',
         'UGCore\\Core\\Respositories\\Titulacion\\MTrabajoInscripcionRepository' => __DIR__ . '/../..' . '/app/Core/Repositories/Titulacion/MTrabajoInscripcionRepository.php',
         'UGCore\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',

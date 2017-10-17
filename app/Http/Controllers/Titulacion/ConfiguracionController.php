@@ -2,16 +2,14 @@
 
 namespace UGCore\Http\Controllers\Titulacion;
 
-
-//use UGCore\Core\Entities\Titulacion\MTDatos;
 use Illuminate\Http\Request;
-use UGCore\Core\Entities\Titulacion\MTDatos;
 
+use UGCore\Core\Entities\Security\User;
+use UGCore\Core\Entities\Titulacion\MTDatos;
 use UGCore\Core\Respositories\Titulacion\MTTitulacionRepository;
 use UGCore\Facades\Messages;
-use UGCore\Http\Controllers\Ajax\SelectController;
 use UGCore\Http\Controllers\Controller;
-use UGCore\Core\Entities\Security\User;
+use UGCore\Http\Controllers\Ajax\SelectController;
 
 use DB;
 class ConfiguracionController extends Controller

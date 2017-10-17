@@ -2,23 +2,17 @@
 
 namespace UGCore\Http\Controllers\Titulacion;
 
+use Illuminate\Http\Request;
 
-
-
-
-use UGCore\Facades\Messages;
-
-use UGCore\Http\Controllers\Controller;
 use UGCore\Core\Entities\Security\User;
+use UGCore\Core\Entities\Titulacion\MTDatos;
+use UGCore\Core\Respositories\Titulacion\ECExamenComplexivoRepository;
+use UGCore\Facades\Messages;
+use UGCore\Http\Controllers\Controller;
+use UGCore\Http\Controllers\Ajax\SelectController;
+
 
 use DB;
-
-
-use Illuminate\Http\Request;
-use UGCore\Http\Controllers\Ajax\SelectController;
-    
-use UGCore\Core\Respositories\Titulacion\ExamenComplexivoRepository;
-
 
 class ExamencomplexivoController extends Controller
 {
@@ -34,13 +28,15 @@ class ExamencomplexivoController extends Controller
      * MTDatosController constructor.
      * @param $datosRPY
      */
-    public function __construct(ExamenComplexivoRepository $datosRPY)
+    public function __construct(ECExamenComplexivoRepository $datosRPY)
     {
+        var_dump(1);
         $this->datosRPY = $datosRPY;
     }
 
     public function index()
     {
+        var_dump(1);
         $objSelect=new SelectController();
         $faculties=$objSelect->getfaculty();
         return view('titulacion.examen_complexivo_rn')->with(['faculties'=>$faculties]);
