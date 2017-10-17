@@ -38,9 +38,9 @@
 
                                 <?php echo Field::select('facultad',$faculties,null,['empty'=>'seleccione','class'=>'select2','label'=>'FACULTAD: ']); ?>
 
-                                <?php echo Field::select('carrera',[],null,['class'=>'select2','label'=>'CARRERA: ']); ?>
+                                <?php echo Field::select('carrera',[],null,['empty'=>'seleccione','class'=>'select2','label'=>'CARRERA: ']); ?>
 
-                                <?php echo Field::text('ciclo',' ',['class'=>'form-control','id'=>'ciclo','value'=>'CICLO', 'label'=>'CICLO ACADÉMICO:']); ?>
+                                <?php echo Field::select('ciclo',[],null,['empty'=>'seleccione','class'=>'select2','label'=>'CICLO: ']); ?>
 
 
 
