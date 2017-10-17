@@ -4,6 +4,14 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function () {
     Route::group(['prefix' => 'titulacion', 'as' => 'titulacion.'], function () {
 
         Route::group(['middleware' => ['titulacion_date_enabled:EC']], function () {
+            Route::group(['prefix' => 'complexivo', 'as' => 'complexivo.'], function () {
+
+
+                Route::get('notas', 'Titulacion\ExamencomplexivoController@index')->name('notas.index');
+                Route::get('datatables/{idcarrera}', 'Titulacion\ExamencomplexivoController@getDatatable');
+                Route::post('store/{idmatricula}', 'Titulacion\ExamencomplexivoController@store');
+
+            });
 
         });
 
@@ -17,7 +25,7 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function () {
 
             Route::post('ConfiguracionesStore', 'Titulacion\ConfiguracionController@store')->name('configuraciones.store');
             Route::post('Configuraciones/{facultad}', 'Titulacion\ConfiguracionController@carreras');
-            
+
             Route::post('Configuraciones-Parametro/{parametros}', 'Titulacion\ConfiguracionController@parametros');
             Route::post('Configuraciones-Plectivo/{plectivos}', 'Titulacion\ConfiguracionController@plectivos');
         });
@@ -37,7 +45,6 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function () {
 
                 Route::get('TrabajoInscripcion', 'Titulacion\UserInscripcionController@index')->name('inscripcion.index');
                 Route::post('DatoUsuario/{parametros}', 'Titulacion\UserInscripcionController@parametros');
-
 
 
             });
