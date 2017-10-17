@@ -52,10 +52,10 @@
                                 <table class="table table-bordered bg-white" id="TrabajoInscripcion">
                                     <thead>
 
-                                    <th>Depende1</th>
-                                    <th>Depende2</th>
-                                    <th>Depende3</th>
-                                    <th>Depende3</th>
+                                    <th>Tema</th>
+                                    <th>Facultad</th>
+                                    <th>Carrera</th>
+                                    <th>Fecha de Registro</th>
 
                                     <th>ACCIONES</th>
                                     </thead>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="table-responsive">
-                                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
+                                <table class="table table-bordered bg-white" id="Tutores">
                                     <thead>
 
                                     <th>Depende1</th>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="table-responsive">
-                                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
+                                <table class="table table-bordered bg-white" id="Revisores">
                                     <thead>
 
                                     <th>Depende1</th>
@@ -160,7 +160,7 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="table-responsive">
-                                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
+                                <table class="table table-bordered bg-white" id="Estudiante">
                                     <thead>
 
                                     <th>Depende1</th>
@@ -196,7 +196,7 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="table-responsive">
-                                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
+                                <table class="table table-bordered bg-white" id="Docente">
                                     <thead>
 
                                     <th>Depende1</th>

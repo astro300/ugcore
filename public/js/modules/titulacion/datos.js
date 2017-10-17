@@ -103,6 +103,35 @@ $(function () {
 
 
             
+            {data: 'tema'},
+             {data: 'facultad'},
+            {data: 'carrera'},
+            {data: 'fecha'},
+    
+
+             {data: 'acciones', "bSortable": false, "searchable": false, "targets": 0,
+                "render":function(data, type, row ){
+                    return   $('<div />').html(row.actions).text();
+                }}
+        ],
+        "order": []
+    }).ajax.reload();
+
+     $.fn.dataTable.ext.errMode = 'throw';
+    $('#TrabajoInscripcion').DataTable({
+        responsive: true, "oLanguage": {
+            "sUrl": "/js/config/datatablespanish.json"
+        },
+        "aoColumnDefs": [],
+        "processing": true,
+        "serverSide": true,
+        "deferRender": true,
+        "destroy": true,
+        "ajax": '/titulacion/trabajo/tesis-data/',
+        "columns": [
+
+
+            
             {data: 'carrera'},
              {data: 'ciclo'},
             {data: 'etapa'},
