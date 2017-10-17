@@ -5,7 +5,7 @@ use UGCore\Core\Entities\CoreModel;
 
 class Matricula extends CoreModel
 {
-    protected $connection = "sqlsrv_BdTitulacion";
+    protected $connection = "sqlsrv_bdacademico";
 
     protected $table = "TB_TIT_MATRICULA";
 
@@ -13,7 +13,7 @@ class Matricula extends CoreModel
 
     protected $primaryKey = 'N_ID';
 
-    public function examen_complexivo()
+    public function examenComplexivo()
     {
         return $this->hasMany(ExamenComplexivo::class,'MATRICULA_ID','N_ID');
     }
