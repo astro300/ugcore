@@ -11,110 +11,35 @@
 
 @section('mainContent')
 
-    <div class="col-lg-7">
-          <!-- Custom Tabs -->
-          <div class="nav-tabs-custom">
+    <div class="col-lg-12">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Datos Generales</a></li>
-              <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Tutores</a></li>
+                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Datos Generales</a></li>
+                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Tutores</a></li>
                 <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Revisores</a></li>
-              <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="true">Estudiantes</a></li>
-              <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="true">Tribunal de Sustentaci&oacute;n</a></li>
-
+                <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="true">Estudiantes</a></li>
+                <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="true">Tribunal de Sustentaci&oacute;n</a>
+                </li>
 
 
             </ul>
             <div class="tab-content">
-              <div class="tab-pane active" id="tab_1">
+                <div class="tab-pane active" id="tab_1">
 
-        
+                    <div class="row">
 
-            <div class="panel-body">
+                        <div class="col-lg-5">
 
-                {!! Field::text('tema',' ',['class'=>'form-control','id'=>'trabajo','placeholder'=>'Tema de Titulación', 'label'=>"TEMA DE TITULACIÓN(TÍTULO):"]) !!}
-
-
-                {!! Field::select('facultad',$faculties,null,['empty'=>'seleccione','class'=>'select2','label'=>'FACULTAD: '])!!}
-                {!! Field::select('carrera',[],null,['class'=>'select2','label'=>'CARRERA: ']) !!}
-                {!! Field::text('ciclo',' ',['class'=>'form-control','id'=>'ciclo','value'=>'CICLO', 'label'=>'CICLO ACADÉMICO:'])!!}
-
-                {!! Field::text('cedula_tutor',' ',['class'=>'form-control','id'=>'cedula_tutor','placeholder'=>'Cédula del Tutor', 'label'=>'CÉDULA DEL TUTOR:'])!!}
-
-                {!! Field::text('nombre_tutor',' ',['class'=>'form-control','id'=>'nombre_tutor','placeholder'=>'Nombre del Tutor', 'label'=>'NOMBRE DEL TUTOR:'])!!}
-
-            </div>
-
-            <div class="panel-footer">
-                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
-            </div>
-        </div>
-                       
-       
-
-                <div class="tab-pane" id="tab_2">
-
-                                    <div class="panel-body">
-
-                                      {!! Field::text('cedula_tutor',' ',['class'=>'form-control','id'=>'cedula_tutor','placeholder'=>'Cédula del Tutor', 'label'=>'CÉDULA DEL TUTOR:'])!!}
-
-                                        {!! Field::text('nombre_tutor',' ',['class'=>'form-control','id'=>'nombre_tutor','placeholder'=>'Nombre del Tutor', 'label'=>'NOMBRE DEL TUTOR:'])!!}
-
-                                     </div>
-
-                            <div class="panel-footer">
-                                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
-                            </div>
-                                    </div>
-                       
-                       
-
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_3">
-                   
-
-                    <div class="panel-body">
-
-                      {!! Field::text('cedula_revisor',' ',['class'=>'form-control','id'=>'cedula_revisor','placeholder'=>'Cédula del Revisor', 'label'=>'CÉDULA DEL REVISOR:'])!!}
-
-                        {!! Field::text('nombre_revisor',' ',['class'=>'form-control','id'=>'nombre_revisor','placeholder'=>'Nombre del Revisor', 'label'=>'NOMBRE DEL REVISOR:'])!!}
-
-                     </div>
-
-            <div class="panel-footer">
-                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
-            </div>
-                   
-          
-        </div>
-
-
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_4">
-
-                
                             <div class="panel-body">
 
-                          {!! Field::text('nombre_estudiante',' ',['class'=>'form-control','id'=>'cedula_estudiante','placeholder'=>'Cédula del Estudiante', 'label'=>'CÉDULA DEL ESTUDIANTE:'])!!}
+                                {!! Field::text('tema',['class'=>'form-control','id'=>'trabajo','placeholder'=>'Tema de Titulación', 'label'=>"TEMA DE TITULACIÓN(TÍTULO):"]) !!}
 
-                            {!! Field::text('nombre_estudiante',' ',['class'=>'form-control','id'=>'nombre_estudiante','placeholder'=>'Nombre del Estudiante', 'label'=>'NOMBRE DEL ESTUDIANTE:'])!!}
 
-                            </div>
+                                {!! Field::select('facultad',$faculties,null,['empty'=>'seleccione','class'=>'select2','label'=>'FACULTAD: '])!!}
+                                {!! Field::select('carrera',[],null,['class'=>'select2','label'=>'CARRERA: ']) !!}
+                                {!! Field::text('ciclo',' ',['class'=>'form-control','id'=>'ciclo','value'=>'CICLO', 'label'=>'CICLO ACADÉMICO:'])!!}
 
-                            <div class="panel-footer">
-                                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
-                            </div>
-                
-                      
-        </div>
-
-                <div class="tab-pane" id="tab_5">
-
-                
-                            <div class="panel-body">
-
-                          {!! Field::text('cedula_docente',' ',['class'=>'form-control','id'=>'cedula_docente','placeholder'=>'Cédula del Docente', 'label'=>'CÉDULA DEL DOCENTE:'])!!}
-
-                            {!! Field::text('nombre_docente',' ',['class'=>'form-control','id'=>'nombre_docente','placeholder'=>'Nombre del Docente', 'label'=>'NOMBRE DEL DOCENTE:'])!!}
 
                             </div>
 
@@ -122,59 +47,197 @@
                                 <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
                             </div>
                         </div>
-                         
-               
+                        <div class="col-lg-7">
+                            <div class="table-responsive">
+                                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
+                                    <thead>
 
-              <!-- /.tab-pane -->
+                                    <th>Depende1</th>
+                                    <th>Depende2</th>
+                                    <th>Depende3</th>
+                                    <th>Depende3</th>
+
+                                    <th>ACCIONES</th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_2">
+
+                    <div class="row">
+
+                        <div class="col-lg-5">
+                            <div class="panel-body">
+
+                                {!! Field::text('cedula_tutor',['class'=>'form-control','id'=>'cedula_tutor','placeholder'=>'Cédula del Tutor', 'label'=>'CÉDULA DEL TUTOR:'])!!}
+
+                                {!! Field::text('nombre_tutor',' ',['class'=>'form-control','id'=>'nombre_tutor','placeholder'=>'Nombre del Tutor', 'label'=>'NOMBRE DEL TUTOR:'])!!}
+
+                            </div>
+
+                            <div class="panel-footer">
+                                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="table-responsive">
+                                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
+                                    <thead>
+
+                                    <th>Depende1</th>
+                                    <th>Depende2</th>
+
+
+                                    <th>ACCIONES</th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_3">
+
+                    <div class="row">
+
+                        <div class="col-lg-5">
+
+                            <div class="panel-body">
+
+                                {!! Field::text('cedula_revisor',['class'=>'form-control','id'=>'cedula_revisor','placeholder'=>'Cédula del Revisor', 'label'=>'CÉDULA DEL REVISOR:'])!!}
+
+                                {!! Field::text('nombre_revisor',' ',['class'=>'form-control','id'=>'nombre_revisor','placeholder'=>'Nombre del Revisor', 'label'=>'NOMBRE DEL REVISOR:'])!!}
+
+                            </div>
+
+                            <div class="panel-footer">
+                                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="table-responsive">
+                                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
+                                    <thead>
+
+                                    <th>Depende1</th>
+                                    <th>Depende2</th>
+
+
+                                    <th>ACCIONES</th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_4">
+
+
+                    <div class="row">
+
+                        <div class="col-lg-5">
+                            <div class="panel-body">
+
+                                {!! Field::text('cedula_estudiante',['class'=>'form-control','id'=>'cedula_estudiante','placeholder'=>'Cédula del Estudiante', 'label'=>'CÉDULA DEL ESTUDIANTE:'])!!}
+
+
+                                 {!! Field::select('nombre_estudiante',[],null,['class'=>'select2','label'=>'NOMBRE DEL ESTUDIANTE:','empty'=>'-SELECCIONE-']) !!}
+                              
+
+                            </div>
+
+                            <div class="panel-footer">
+                                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="table-responsive">
+                                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
+                                    <thead>
+
+                                    <th>Depende1</th>
+                                    <th>Depende2</th>
+
+
+                                    <th>ACCIONES</th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_5">
+
+
+                    <div class="row">
+
+                        <div class="col-lg-5">
+                            <div class="panel-body">
+
+                                {!! Field::text('cedula_docente',['class'=>'form-control','id'=>'cedula_docente','placeholder'=>'Cédula del Docente', 'label'=>'CÉDULA DEL DOCENTE:'])!!}
+
+                                {!! Field::text('nombre_docente',' ',['class'=>'form-control','id'=>'nombre_docente','placeholder'=>'Nombre del Docente', 'label'=>'NOMBRE DEL DOCENTE:'])!!}
+
+                            </div>
+
+                            <div class="panel-footer">
+                                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="table-responsive">
+                                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
+                                    <thead>
+
+                                    <th>Depende1</th>
+                                    <th>Depende2</th>
+
+
+                                    <th>ACCIONES</th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
-          </div>
-          <!-- nav-tabs-custom -->
-
         </div>
+        <!-- nav-tabs-custom -->
 
-    <div class="col-lg-5">
-        <div class="table-responsive">
-                <table class="table table-bordered bg-white" id="TrabajoInscripcion">
-                        <thead>
-
-                            <th>Depende1</th>
-                             <th>Depende2</th>
-                            <th>Depende3</th>
-
-
-
-                            <th>ACCIONES</th>
-                        </thead>
-                </table>
-        </div>
     </div>
 
 
-   
+
+
+
 @endsection
 @section('masterJsCustom')
- {!!Html::script('plugins/datepicker/bootstrap-datepicker.js')!!}
+
     {!!Html::script('plugins/fileinput/fileinput.min.js')!!}
     {!!Html::script('plugins/datatables/jquery.dataTables.min.js')!!}
 
     <script src="{{asset('/js/modules/titulacion/datos.js')}}"></script>
-    <script>
-    	 $('.pickadate').datepicker({
-        formatSubmit: 'yyyy-mm-dd',
-        format: 'yyyy-mm-dd',
-        selectYears: true,
-        editable: true,
-        autoclose: true,
-        orientation:'top'
-    });
 
-    </script>
 @endsection
 @section('masterCssCustom')
-	{!!Html::style('/css/datatables.css')!!}
+    {!!Html::style('/css/datatables.css')!!}
     {!!Html::style('/plugins/fileinput/fileinput.min.css')!!}
-    {!!Html::style('/plugins/datepicker/datepicker3.css')!!}
+
     {!! Html::style('/css/checkbox.css') !!}
 
 @endsection
