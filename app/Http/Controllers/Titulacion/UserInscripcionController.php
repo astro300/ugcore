@@ -3,7 +3,7 @@
 namespace UGCore\Http\Controllers\Titulacion;
 
 use Illuminate\Http\Request;
-use UGCore\Core\Respositories\Titulacion\MTTitulacionRepository;
+use UGCore\Core\Respositories\Titulacion\MTInscripcionñ;
 use UGCore\Facades\Messages;
 use UGCore\Http\Controllers\Ajax\SelectController;
 use UGCore\Http\Controllers\Controller;
@@ -13,17 +13,13 @@ use DB;
 
 class UserInscripcionController extends Controller
 {
+
+
     public function index()
     {
     	$objSelect=new SelectController();
         $faculties=$objSelect->getfaculty();
-        
-/*
-     	 $ciclo= DB::connection('sqlsrv_bdacademico')->table('TB_PLECTIVO')
-    	->where('COD_CARRERA','=','0301')
-    	->pluck('DESCRIPCION','COD_PLECTIVO')->toArray();
 
-*/
     	return view('titulacion.trabajoinscripcion')->with(['faculties'=>$faculties]);
 
     }
@@ -36,13 +32,12 @@ class UserInscripcionController extends Controller
 
 
       }
-       
-/*
-     	 $ciclo= DB::connection('sqlsrv_bdacademico')->table('TB_PLECTIVO')
-    	->where('COD_CARRERA','=','0301')
-    	->pluck('DESCRIPCION','COD_PLECTIVO')->toArray();
 
-*/
+        public function datatables(){
+          return $this->datosRPY->datatablesDatos();
+        }
+       
+
     	
 
     

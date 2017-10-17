@@ -45,6 +45,7 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function () {
 
                 Route::get('TrabajoInscripcion', 'Titulacion\UserInscripcionController@index')->name('inscripcion.index');
                 Route::post('DatoUsuario/{parametros}', 'Titulacion\UserInscripcionController@parametros');
+                Route::get('tesis-data', 'Titulacion\UserInscripcionController@datatables');
 
 
             });
