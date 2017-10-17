@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'guest' => \UGCore\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'role'=> \UGCore\Http\Middleware\RoleMiddleware::class,
+        'titulacion_date_enabled' => \UGCore\Http\Middleware\TitDateEnabledMiddleware::class,
     ];
 }

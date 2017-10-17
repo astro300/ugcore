@@ -6,135 +6,188 @@
  * Date: 4/9/2017
  * Time: 10:20
  */
+
 namespace UGCore\Core\Respositories\Titulacion;
+
 use Illuminate\Http\Request;
 use UGCore\Core\Entities\Titulacion\MTDatos;
 use Storage;
-use File;
+//use File;
 use Yajra\Datatables\Datatables;
 use DB;
+use Utils;
 
 class MTTitulacionRepository
 {
-    public function getData(){
+    public function getData()
+    {
         return MTDatos::all();
     }
 
-    public function forSave(Request $request){
 
-        $objMTDatos=new MTDatos($request->all());
-        $objMTDatos->COD_TIPO_PARAMETRO=$request->etapa;
-        $objMTDatos->COD_PLECTIVO=$request->ciclo;
-        $objMTDatos->FECHA_INICIO=$request->fecha_inicio;
-        $objMTDatos->FECHA_FIN=$request->fecha_final;
-        $objMTDatos->ESTADO='1';
-        $objMTDatos->COD_FACULTAD=$request->facultad;
-        $objMTDatos->COD_CARRERA=$request->carrera;
+    public function forSave(Request $request, $flagAll = false)
+    {
 
-      
-        $objMTDatos->USUARIO_INGRESO=currentUser()->id;
-        $objMTDatos->USUARIO_ACTUALIZA=currentUser()->id;
-        $objMTDatos->save();
-    }
-/*
-    public function forUpdate(MTDatos $dato,Request $request){
-        $dato->fill($request->all());
-        $dato->sexo='M';
-        $dato->ip=$request->ip();
-        $dato->user_id=currentUser()->id;
+        \DB::connection('sqlsrv_bdacademico')->beginTransaction();
+        try {
+            if ($flagAll) {
+                $matrixz = DB::connection('sqlsrv_bdacademico')
+                    ->table('TB_FACULTAD AS F')
+                    ->join('TB_CARRERA AS C', 'F.COD_FACULTAD', '=', 'C.COD_FACULTAD')
+                    ->where('F.COD_FACULTAD', '<', '26')
+                    ->where('C.NOACADE', '=', 0)
+                    ->where('C.ESTADO_CARRERA', '=', 'A')
+                    ->where('C.COD_CCARRERA', '=', 1)
+                    ->select('F.COD_FACULTAD AS COD_FACULTAD',
+                        DB::raw('LTRIM(RTRIM(C.COD_CARRERA)) AS COD_CARRERA'))->get();
 
-        if($request->documentoFoto!=null){
-            //Subir documento al repositorio
-            $file=$request->documentoFoto;
-            $extension = $file->getClientOriginalExtension();
-            $nameFile='img_'.currentUser()->id.uniqid().'.'.$extension;
-            Storage::disk('public')->put("fotos/$nameFile",  File::get($file));
-            $dato->archivo=$nameFile;
+
+                $arrayMTDATOS = [];
+                foreach ($matrixz as $item) {
+                    $objMTDatos =
+                        ['COD_TIPO_PARAMETRO' => $request->etapa,
+                            'COD_PLECTIVO' => $request->ciclo,
+                            'FECHA_INICIO' => $request->fecha_inicio,
+                            'FECHA_FIN' => $request->fecha_final,
+                            'ESTADO' => '1',
+                            'TIPO' => $request->tipo,
+                            'COD_FACULTAD' => $item->COD_FACULTAD,
+                            'COD_CARRERA' => $item->COD_CARRERA,
+                            'USUARIO_INGRESO' => currentUser()->id,
+                            'USUARIO_ACTUALIZA' => currentUser()->id,
+                            'created_at' => Utils::getDateSQL(),
+                            'updated_at' => Utils::getDateSQL()];
+
+                    $arrayMTDATOS[] = $objMTDatos;
+                }
+
+                $arrayMTDATOS = array_chunk($arrayMTDATOS, 40);
+
+                foreach ($arrayMTDATOS as $lote) {
+                    MTDatos::insert($lote);
+                }
+            }else{
+               MTDatos::insert([['COD_TIPO_PARAMETRO' => $request->etapa,
+                            'COD_PLECTIVO' => $request->ciclo,
+                            'FECHA_INICIO' => $request->fecha_inicio,
+                            'FECHA_FIN' => $request->fecha_final,
+                            'ESTADO' => '1',
+                            'TIPO' => $request->tipo,
+                            'COD_FACULTAD' => $request->facultad,
+                            'COD_CARRERA' => $request->carrera,
+                            'USUARIO_INGRESO' => currentUser()->id,
+                            'USUARIO_ACTUALIZA' => currentUser()->id,
+                            'created_at' => Utils::getDateSQL(),
+                            'updated_at' => Utils::getDateSQL()]]);
+            }
+
+            \DB::connection('sqlsrv_bdacademico')->commit();
+        } catch (\Exception $ex) {
+            \DB::connection('sqlsrv_bdacademico')->rollback();
+            throw new \Exception($ex);
         }
-        $dato->save();
+
+
     }
-*/
-    public function datatablesDatos(){
+    public function forUpdate(Request $request,MTDatos $datos)
+    {
+   //     dd($request);
+  
+    
+
+  //lenar todos $datos->fill($request->all());
+  
+  $datos->COD_TIPO_PARAMETRO=$request->etapa;
+  $datos->COD_PLECTIVO=$request->ciclo;
+  $datos->COD_CARRERA=$request->carrera;
+  $datos->FECHA_INICIO=$request->fecha_inicio;
+  $datos->FECHA_FIN=$request->fecha_final;
+  $datos->ESTADO='1';
+
+  $datos->USUARIO_ACTUALIZA=currentUser()->id;
+  $datos->TIPO=$request->tipo;
+
+  //dd($datos);
+  $datos->save();
    
- /*->select('db1.*')
-  ->leftJoin('db2.users as db2', 'db1.id', '=', 'db2.id')
-  ->where('db2.id', 5)
-  ->get();
+
+
+    }
+     public function forDelete($id)
+    {
+
+       $objParametro=MTDatos::findOrFail($id);
+      
+        $objParametro->ESTADO='0';
+          $objParametro->save();
+
+  //lenar todos $datos->fill($request->all());
+  /*
+  $datos->COD_TIPO_PARAMETRO=$request->etapa;
+  $datos->COD_PLECTIVO=$request->ciclo;
+  $datos->COD_CARRERA=$request->carrera;
+  $datos->FECHA_INICIO=$request->fecha_inicio;
+  $datos->FECHA_FIN=$request->fecha_final;
+  
+
+  $datos->USUARIO_ACTUALIZA=currentUser()->id;
+  $datos->TIPO=$request->tipo;
+
+  //dd($datos);
+  $datos->save();
+   
 */
 
+    }
+    
+    public function datatablesDatos()
+    {
 
-
-
+        /*->select('db1.*')
+         ->leftJoin('db2.users as db2', 'db1.id', '=', 'db2.id')
+         ->where('db2.id', 5)
+         ->get();
+       */
 
         return Datatables::of(
-            MTDatos::orderBy('TB_CARRERA.COD_CARRERA','ASC')
-            ->join('BdAcademico.dbo.TB_CARRERA as TB_CARRERA','TB_CARRERA.COD_CARRERA','=','TB_TIT_PARAMETRO.COD_CARRERA')
-                ->select('TB_CARRERA.NOMBRE as carrera','COD_PLECTIVO as ciclo','COD_TIPO_PARAMETRO as etapa','FECHA_INICIO as fecha_inicio','FECHA_FIN as fecha_final')->get()
+            MTDatos::orderBy('TB_CARRERA.COD_CARRERA', 'DESC')
+                ->join('BdAcademico.dbo.TB_CARRERA as TB_CARRERA', 'TB_CARRERA.COD_CARRERA', '=', 'TB_TIT_PARAMETRO.COD_CARRERA')
+                 ->join('BdAcademico.dbo.TB_PLECTIVO as TB_PLECTIVO',
+                     'TB_PLECTIVO.COD_PLECTIVO', '=', 'TB_TIT_PARAMETRO.COD_PLECTIVO')
+                 ->join('BdAcademico.dbo.TB_TIT_TIPO_PARAMETRO as TB_TIT_TIPO_PARAMETRO',
+                     'TB_TIT_TIPO_PARAMETRO.COD_TIPO_PARAMETRO', '=', 'TB_TIT_PARAMETRO.COD_TIPO_PARAMETRO')
+                 ->join('BdAcademico.dbo.TB_TIT_TIPO_MATRICULA as TB_TIT_TIPO_MATRICULA',
+                     'TB_TIT_TIPO_MATRICULA.ID', '=', 'TB_TIT_PARAMETRO.TIPO')
+                 ->where('TB_TIT_PARAMETRO.ESTADO','=','1')
+                ->select('TB_TIT_PARAMETRO.N_ID','TB_CARRERA.NOMBRE as carrera',
+                    'TB_PLECTIVO.DESCRIPCION as ciclo', 'TB_TIT_TIPO_PARAMETRO.DESCRIPCION as etapa',
+                    'TB_TIT_TIPO_MATRICULA.NOM_TIPO_MAT as tipo','TB_TIT_PARAMETRO.FECHA_INICIO as fecha_inicio',
+                    'TB_TIT_PARAMETRO.FECHA_FIN as fecha_final')->get()
+         //     )->add_column('actions', ' <a href=""><span class="fa fa-pencil"></span>&nbsp;Editar</a>')->make(true);
 
 
-        )->addColumn('actions', ' <a href=""><span class="fa fa-pencil"></span>&nbsp;Editar</a>')->make(true);
-/*
-         
-        return Datatables::of(MTDatos::orderBy('COD_CARRERA','ASC')
-                ->select('COD_CARRERA as carrera','COD_PLECTIVO as ciclo','COD_TIPO_PARAMETRO as etapa',
-                          'FECHA_INICIO as fecha_inicio','FECHA_FIN as fecha_final')->get()
-                        )
-            ->add_column('actions', ' <a href=""><span class="fa fa-pencil"></span>&nbsp;Editar</a>')->make(true);
-
-       // ->add_column('actions', ' <a href="{{ route(\'titulacion.datos.edit\', $N_ID) }}"><span class="fa fa-pencil"></span>&nbsp;Editar</a>')->make(true);*/
-    }
-
-    public function ListTrabTituxCarrera($idcarrera)
-    {
-        $lista = DB::select('SELECT T.NOMBRE, (D.APELLIDO+\' \'+ D.NOMBRE ) AS TUTOR, 
-          (SELECT TOP 1  D.APELLIDO+\' \'+D.NOMBRE FROM BdTitulacion.dbo.TB_TIT_TRABAJO_REVISOR REV
-            WHERE D.COD_DOCENTE = REV.COD_DOCENTE_REVISOR   COLLATE Modern_Spanish_CI_AS ) AS REVISOR
-            ,
-            STUFF(
-            (select \',\'+(D.APELLIDO+\' \'+D.NOMBRE)
-             from BdTitulacion.dbo.TB_TIT_TRABAJO_TRIBUNAL TR
-             where   T.NUMERO_TRABAJO = TR.NUMERO_TRABAJO
-             FOR XML PATH(\'\'))
-            ,1,1,\'\'
-            ) AS TRIBUNAL_SUSTENTACION
-
-            ,
-            STUFF(
-            (select \',\'+(E.APELLIDO+\' \'+ E.NOMBRE)
-             from BdTitulacion.dbo.TB_TIT_TRABAJO_INTEGRANTE TI
-             INNER JOIN BdAcademico.dbo.TB_ESTUDIANTE_DPERSONAL E ON TI.COD_ESTUDIANTE = E.COD_ESTUDIANTE 
-             COLLATE Modern_Spanish_CI_AS
-             AND   T.NUMERO_TRABAJO = TI.NUMERO_TRABAJO 
-             FOR XML PATH(\'\'))
-            ,1,1,\'\'
-            ) AS ESTUDIANTES
-            
-            
-            FROM BdTitulacion.dbo.TB_TIT_TRABAJO T
-            INNER JOIN BdAcademico.dbo.TB_DOCENTE_DPERSONAL D ON T.COD_DOCENTE_TUTOR = D.COD_DOCENTE
-            COLLATE Modern_Spanish_CI_AS 
-            WHERE T.COD_CARRERA  = ?', [$idcarrera]);
-    }
-
-
-    public function ForDatatable($idcarrera){
-
-        //dd($idcarrera);
-        return \Datatables::of(
-
-            DB::connection('sqlsrv_BdTitulacion')
-            ->table('BdTitulacion.dbo.TB_TIT_MATRICULA as ma')
-                ->join('BdTitulacion.dbo.TB_TIT_TIPO_MODALIDAD as md','ma.TIPO_MODALIDAD','=','md.ID')
-                ->join('BdAcademico.dbo.TB_ESTUDIANTE_DPERSONAL as e','ma.NUM_IDENTIFICACION','=','e.COD_ESTUDIANTE')
-                ->join('BdAcademico.dbo.TB_CARRERA as c','ma.COD_CARRERA','=','c.COD_CARRERA')
-                ->join('BdAcademico.dbo.TB_FACULTAD as f','c.COD_FACULTAD','=','f.COD_FACULTAD')
-                ->select('f.NOMBRE as FACULTAD','c.NOMBRE as CARRERA',
-                    DB::raw("e.APELLIDO+' '+e.NOMBRE  as ESTUDIANTE") )
-                ->where('ma.COD_CARRERA','=',$idcarrera)
-                ->get()
         )
-            // ->add_column('actions', ' <a href="{{ route(\'surveys.categories_surveys.edit\', $id) }}"><span class="fa fa-pencil"></span>&nbsp;Editar</a>')
-            ->make(true);
-    }
+        ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $N_ID) }}" class="btn btn-primary btn-xs">&nbsp;Editar</a>|<a href="{{ route(\'titulacion.configuracion.delete\', $N_ID) }}" onclick="
+return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
+    class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
+        aria-hidden="true">&nbsp;Eliminar</a>')
+        
+        ->make(true);
 
+        //var_dump($results);
+
+
+
+
+
+        /*
+
+                return Datatables::of(MTDatos::orderBy('COD_CARRERA','ASC')
+                        ->select('COD_CARRERA as carrera','COD_PLECTIVO as ciclo','COD_TIPO_PARAMETRO as etapa',
+                                  'FECHA_INICIO as fecha_inicio','FECHA_FIN as fecha_final')->get()
+                                )
+                    ->add_column('actions', ' <a href=""><span class="fa fa-pencil"></span>&nbsp;Editar</a>')->make(true);
+
+               // ->add_column('actions', ' <a href=""><span class="fa fa-pencil"></span>&nbsp;Editar</a>')->make(true);*/
+    }
 }

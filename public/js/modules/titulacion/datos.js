@@ -1,7 +1,32 @@
 /**
  * Created by blacksato on 4/9/2017.
  */
+
+
 $(function () {
+
+ $('#cedula_estudiante').on('keydown', function (e) {
+    if (e.which === 9) {
+        $("#nombre_estudiante").html('');
+        if(this.value!=''){
+
+
+        var objApiRest = new AJAXRest('/titulacion/trabajo/DatoUsuario/'+this.value, {}, 'POST');
+        objApiRest.extractDataAjax(function (_resultContent, status) {
+            if (status == 200) {
+
+                $.each(_resultContent.data,function(_key, _value){
+                    $("#nombre_estudiante").append("<option value='"+_value.COD_ESTUDIANTE+"'>"+_value.NOMBRE_ESTUDIANTE+"</option>")
+                });
+            }else{
+                alertToast(_resultContent.message,3000);
+            }
+        })
+        }
+    }
+    });
+
+
     $("#facultad").on('change', function () {
         $("#carrera").html('');
         if(this.value!=''){
@@ -13,6 +38,25 @@ $(function () {
 
                 $.each(_resultContent.data,function(_key, _value){
                     $("#carrera").append("<option value='"+_value.COD_CARRERA+"'>"+_value.NOMBRE+"</option>")
+                });
+            }else{
+                alertToast(_resultContent.message,3000);
+            }
+        })
+        }
+    });
+
+       $("#carrera").on('change', function () {
+        $("#ciclo").html('');
+        if(this.value!=''){
+
+
+        var objApiRest = new AJAXRest('/titulacion/Configuraciones-Plectivo/'+this.value, {}, 'POST');
+        objApiRest.extractDataAjax(function (_resultContent, status) {
+            if (status == 200) {
+
+                $.each(_resultContent.data,function(_key, _value){
+                    $("#ciclo").append("<option value='"+_value.COD_PLECTIVO+"'>"+_value.DESCRIPCION+"</option>")
                 });
             }else{
                 alertToast(_resultContent.message,3000);
@@ -60,6 +104,7 @@ $(function () {
             {data: 'carrera'},
              {data: 'ciclo'},
             {data: 'etapa'},
+            {data: 'tipo'},
              {data: 'fecha_inicio'},
              {data: 'fecha_final'},
 
@@ -74,56 +119,6 @@ $(function () {
  });
 
 
-//add vplaza
-
-$("#tfacultad").on('change', function () {
-
-    var carrera = 'tCarrera';
-    var ruta = '/titulacion/Configuraciones/';
-    var value = this.value;
-    changeCarrer(carrera, ruta,value);
-});
-
-$('#rfacultad').on('change', function () {
-    var carrera = 'rCarrera';
-    var ruta = '/titulacion/Configuraciones/';
-    var value = this.value;
-    changeCarrer(carrera, ruta,value);
-});
-
-$('#ttfacultad').on('change', function () {
-    var carrera = 'ttCarrera';
-    var ruta = '/titulacion/Configuraciones/';
-    var value = this.value;
-    changeCarrer(carrera, ruta,value);
-});
-
-$('#excfacultad').on('change', function () {
-    var carrera = 'excCarrera';
-    var ruta = '/titulacion/Configuraciones/';
-    var value = this.value;
-    changeCarrer(carrera, ruta,value);
-});
-
-function changeCarrer(carrera, ruta, value)
-{
-    $('#'+carrera+'').html('');
-    if(this.value!=''){
-
-
-        var objApiRest = new AJAXRest(ruta+''+value, {}, 'POST');
-        objApiRest.extractDataAjax(function (_resultContent, status) {
-            if (status == 200) {
-
-                $.each(_resultContent.data,function(_key, _value){
-                    $('#'+carrera).append("<option value='"+_value.COD_CARRERA+"'>"+_value.NOMBRE+"</option>")
-                });
-            }else{
-                alertToast(_resultContent.message,3000);
-            }
-        })
-    }
-}
 
   
 
