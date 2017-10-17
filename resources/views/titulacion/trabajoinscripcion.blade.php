@@ -37,8 +37,8 @@
 
 
                                 {!! Field::select('facultad',$faculties,null,['empty'=>'seleccione','class'=>'select2','label'=>'FACULTAD: '])!!}
-                                {!! Field::select('carrera',[],null,['class'=>'select2','label'=>'CARRERA: ']) !!}
-                                {!! Field::text('ciclo',' ',['class'=>'form-control','id'=>'ciclo','value'=>'CICLO', 'label'=>'CICLO ACADÉMICO:'])!!}
+                                {!! Field::select('carrera',[],null,['empty'=>'seleccione','class'=>'select2','label'=>'CARRERA: ']) !!}
+                                {!! Field::select('ciclo',[],null,['empty'=>'seleccione','class'=>'select2','label'=>'CICLO: ']) !!}
 
 
                             </div>

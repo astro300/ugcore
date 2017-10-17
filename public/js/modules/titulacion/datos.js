@@ -35,7 +35,7 @@ $(function () {
         var objApiRest = new AJAXRest('/titulacion/Configuraciones/'+this.value, {}, 'POST');
         objApiRest.extractDataAjax(function (_resultContent, status) {
             if (status == 200) {
-
+                   $("#carrera").append("<option value='' selected='selected'> * Seleccione la carrera *</option>");
                 $.each(_resultContent.data,function(_key, _value){
                     $("#carrera").append("<option value='"+_value.COD_CARRERA+"'>"+_value.NOMBRE+"</option>")
                 });
@@ -55,6 +55,8 @@ $(function () {
         objApiRest.extractDataAjax(function (_resultContent, status) {
             if (status == 200) {
 
+                  $("#ciclo").append("<option value='' selected='selected'> * Seleccion el Periodo Lectivo *</option>");
+
                 $.each(_resultContent.data,function(_key, _value){
                     $("#ciclo").append("<option value='"+_value.COD_PLECTIVO+"'>"+_value.DESCRIPCION+"</option>")
                 });
@@ -73,7 +75,7 @@ $(function () {
         var objApiRest = new AJAXRest('/titulacion/Configuraciones-Parametro/'+this.value, {}, 'POST');
         objApiRest.extractDataAjax(function (_resultContent, status) {
             if (status == 200) {
-
+                $("#etapa").append("<option value='' selected='selected'> * Seleccion la etapa *</option>");
                 $.each(_resultContent.data,function(_key, _value){
                     $("#etapa").append("<option value='"+_value.CODIGO+"'>"+_value.DESCRIPCION+"</option>")
                 });

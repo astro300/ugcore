@@ -16,7 +16,7 @@ use DB;
 
 use Illuminate\Http\Request;
 use UGCore\Http\Controllers\Ajax\SelectController;
-
+    
 use UGCore\Core\Respositories\Titulacion\ExamenComplexivoRepository;
 
 

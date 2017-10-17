@@ -17,6 +17,7 @@ class UserInscripcionController extends Controller
     {
     	$objSelect=new SelectController();
         $faculties=$objSelect->getfaculty();
+        
 /*
      	 $ciclo= DB::connection('sqlsrv_bdacademico')->table('TB_PLECTIVO')
     	->where('COD_CARRERA','=','0301')
