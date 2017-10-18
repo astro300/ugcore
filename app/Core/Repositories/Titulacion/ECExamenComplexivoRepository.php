@@ -17,16 +17,28 @@ class ECExamenComplexivoRepository
 
         return \Datatables::of(
 
+            /*select est.COD_ESTUDIANTE, f.NOMBRE, c.NOMBRE, (est.APELLIDO+' '+est.NOMBRE) as estudiante,
+            (case when mat.CS = 'R' then e.NOTA end) as NOTA,
+            (case when mat.CS = 'E' then e.NOTA end) as NO(case when mat.CS = 'R' then e.NOTA end) as NOTATA_GRACIA
+             from BdTitulacion.dbo.TB_TIT_MATRICULA ma
+            inner join BdTitulacion.dbo.TB_TIT_TIPO_MODALIDAD md on ma.TIPO_MODALIDAD = md.ID
+            left join BdAcademico.dbo.TB_EXAMEN_GRACIA e on ma.NUM_IDENTIFICACION = e.COD_ESTUDIANTE
+            left join BdAcademico.dbo.TB_MATERIA mat on e.COD_MATERIA = mat.COD_MATERIA
+            inner join BdAcademico.dbo.TB_ESTUDIANTE_DPERSONAL est on ma.NUM_IDENTIFICACION = est.COD_ESTUDIANTE
+            inner join BdAcademico.dbo.TB_CARRERA c on ma.COD_CARRERA = c.COD_CARRERA
+            inner join BdAcademico.dbo.TB_FACULTAD f on c.COD_FACULTAD = f.COD_FACULTAD*/
             DB::connection('sqlsrv_bdacademico')
-                ->table('BdAcademico.dbo.TB_TIT_MATRICULA as ma')
-                ->join('BdAcademico.dbo.TB_TIT_TIPO_MODALIDAD as md','ma.TIPO_MODALIDAD','=','md.ID')
-                ->join('BdAcademico.dbo.TB_TIT_TIPO_MODALIDAD as md','ma.TIPO_MODALIDAD','=','md.ID')
-                ->leftJoin('BdAcademico.dbo.TB_TIT_EXAMEN_GRACIA as complex', 'ma.N_ID', '=', 'complex.MATRICULA_ID')
+                ->table('BdTitulacion.dbo.TB_TIT_MATRICULA as ma')
+                ->join('BdTitulacion.dbo.TB_TIT_TIPO_MODALIDAD as md','ma.TIPO_MODALIDAD','=','md.ID')
+                ->leftJoin('BdAcademico.dbo.TB_EXAMEN_GRACIA as complex', 'ma.NUM_IDENTIFICACION', '=', 'complex.COD_ESTUDIANTE')
+                ->leftJoin('BdAcademico.dbo.TB_MATERIA as mat', 'complex.COD_MATERIA','=','mat.COD_MATERIA')
                 ->join('BdAcademico.dbo.TB_ESTUDIANTE_DPERSONAL as e','ma.NUM_IDENTIFICACION','=','e.COD_ESTUDIANTE')
                 ->join('BdAcademico.dbo.TB_CARRERA as c','ma.COD_CARRERA','=','c.COD_CARRERA')
                 ->join('BdAcademico.dbo.TB_FACULTAD as f','c.COD_FACULTAD','=','f.COD_FACULTAD')
                 ->select('ma.N_ID as id','f.NOMBRE as FACULTAD','c.NOMBRE as CARRERA',
-                    DB::raw("e.APELLIDO+' '+e.NOMBRE  as ESTUDIANTE"),'complex.NOTA_COMPLEXIVO','complex.NOTA_GRACIA',
+                    DB::raw("e.APELLIDO+' '+e.NOMBRE  as ESTUDIANTE"),
+                    DB::raw("(case when mat.CS = 'EC' then complex.NOTA end) as NOTA"),
+                    DB::raw("(case when mat.CS = 'ECG' then complex.NOTA end) as NOTA_GRACIA"),
                     DB::raw("(case when complex.NOTA_COMPLEXIVO is not null then
                                  case when
                                     complex.NOTA_GRACIA is not null
