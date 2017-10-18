@@ -25,7 +25,6 @@ class ExamencomplexivoController extends Controller
     private $datosRPY;
 
     /**
-     * MTDatosController constructor.
      * @param $datosRPY
      */
     public function __construct(ECExamenComplexivoRepository $datosRPY)
