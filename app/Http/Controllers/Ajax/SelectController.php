@@ -157,7 +157,7 @@ class SelectController extends Controller
     }
     //modulo de titulacion
 
-    public function SearchPerson($parametros,$type='json')
+    public function SearchPerson($cedula,$type='json')
     {
       
         $result = DB::connection('sqlsrv_bdacademico')
@@ -176,6 +176,85 @@ class SelectController extends Controller
         }
     }
 
+        public function SearchPerson_Titulacion($cedula,$type='json')
+    {
+      
+        $result = DB::connection('sqlsrv_bdacademico')
+            ->table('TB_ESTUDIANTE_DPERSONAL AS C')
+            ->where('C.COD_ESTUDIANTE','=',$cedula)
+          ->join('BdAcademico.dbo.TB_TIT_MATRICULA AS TB_TIT_MATRICULA','TB_TIT_MATRICULA.NUM_IDENTIFICACION','=','C.COD_ESTUDIANTE')
+        
+            ->select('C.COD_ESTUDIANTE AS COD_ESTUDIANTE')
+            ->select(DB::raw("C.APELLIDO +' '+ C.NOMBRE AS NOMBRE_ESTUDIANTE"));
+            
+        if($type=='json'){
+            $result=$result->get('COD_ESTUDIANTE','NOMBRE_ESTUDIANTE');
+            $listaCarreras['data']=$result;
+            return response()->json($listaCarreras, 200);
+        }else{
+            $result=$result->pluck('COD_ESTUDIANTE','NOMBRE_ESTUDIANTE')->toArray();
+           return $result;
+        }
+    }
+
+    public function getTutorCategoria()
+    {
+
+
+    }
+    public function getAreaCarrera(){
+
+        
+    }
+
+
+
+        public function SearchPersonCarrera_Titulacion($cedula,$type='json')
+    {
+
+        $result = DB::connection('sqlsrv_bdacademico')
+            ->table('TB_ESTUDIANTE_DPERSONAL AS C')
+            ->where('C.COD_ESTUDIANTE','=',$cedula)
+          ->join('BdAcademico.dbo.TB_TIT_MATRICULA AS TB_TIT_MATRICULA','TB_TIT_MATRICULA.NUM_IDENTIFICACION','=','C.COD_ESTUDIANTE')
+          ->join('BdAcademico.dbo.TB_CARRERA AS TB_CARRERA','TB_CARRERA.COD_CARRERA','=','TB_TIT_MATRICULA.COD_CARRERA')
+
+            ->select('TB_CARRERA.COD_CARRERA AS COD_CARRERA','TB_CARRERA.NOMBRE AS NOMBRE_CARRERA');
+            
+        if($type=='json'){
+            $result=$result->get('COD_CARRERA','NOMBRE_CARRERA');
+            $listaCarreras['data']=$result;
+            return response()->json($listaCarreras, 200);
+        }else{
+            $result=$result->pluck('COD_CARRERA','NOMBRE_CARRERA')->toArray();
+           return $result;
+        }
+    }
+
+
+     public function SearchPersonTesis_Titulacion($carrera,$type='json')
+    {
+
+    $result = DB::connection('sqlsrv_bdacademico')
+            ->table('TB_CARRERA AS C')
+            ->where('C.COD_CARRERA','=',$carrera)
+            ->where('TB_TESIS.ESTADO','=','I')
+          ->join('BdAcademico.dbo.TB_TESIS AS TB_TESIS','TB_TESIS.COD_CARRERA','=','C.COD_CARRERA')
+
+            ->select('TB_TESIS.COD_TESIS AS COD_TESIS','TB_TESIS.TEMA AS TEMA');
+            
+        if($type=='json'){
+            $result=$result->get('TEMA','COD_TESIS');
+            $listaCarreras['data']=$result;
+            return response()->json($listaCarreras, 200);
+        }else{
+            $result=$result->pluck('TEMA','COD_TESIS')->toArray();
+           return $result;
+        }
+
+    
+
+    }
+    
      public function TitulacionParametro($parametro,$type='json')
     {
         $result = DB::connection('sqlsrv_bdacademico')

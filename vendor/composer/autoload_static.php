@@ -4106,6 +4106,7 @@ class ComposerStaticInit1b1d5ca017d2e775ff3f037d54dfbc12
         'UGCore\\Core\\Entities\\Surveys\\TypeQuestion' => __DIR__ . '/../..' . '/app/Core/Entities/Surveys/TypeQuestion.php',
         'UGCore\\Core\\Entities\\Titulacion\\ExamenComplexivo' => __DIR__ . '/../..' . '/app/Core/Entities/Titulacion/ExamenComplexivo.php',
         'UGCore\\Core\\Entities\\Titulacion\\MTDatos' => __DIR__ . '/../..' . '/app/Core/Entities/Titulacion/MTDatos.php',
+        'UGCore\\Core\\Entities\\Titulacion\\MTInscripcion' => __DIR__ . '/../..' . '/app/Core/Entities/Titulacion/MTInscripcion.php',
         'UGCore\\Core\\Entities\\Titulacion\\Matricula' => __DIR__ . '/../..' . '/app/Core/Entities/Titulacion/Matricula.php',
         'UGCore\\Core\\Entities\\Uath\\HorasExtrasPlanificacion' => __DIR__ . '/../..' . '/app/Core/Entities/Uath/HorasExtrasPlanificacion.php',
         'UGCore\\Core\\Entities\\Uath\\HorasExtrasPlanificacionEmpleado' => __DIR__ . '/../..' . '/app/Core/Entities/Uath/HorasExtrasPlanificacionEmpleado.php',

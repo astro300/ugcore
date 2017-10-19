@@ -44,8 +44,15 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function () {
             Route::group(['prefix' => 'trabajo', 'as' => 'trabajo.'], function () {
 
                 Route::get('TrabajoInscripcion', 'Titulacion\UserInscripcionController@index')->name('inscripcion.index');
-                Route::post('DatoUsuario/{parametros}', 'Titulacion\UserInscripcionController@parametros');
+                Route::post('DatoUsuario/{cedula}', 'Titulacion\UserInscripcionController@parametros');
+                Route::post('DatoUsuarioEstudianteCarrera/{cedula}', 'Titulacion\UserInscripcionController@parametrosestudianteCarrera');
+                Route::post('DatosTrabajoTitulacion/{carrera}', 'Titulacion\UserInscripcionController@DatosTrabajoTitulacion');
+
+
                 Route::get('tesis-data', 'Titulacion\UserInscripcionController@datatables');
+
+                Route::post('TemaStore', 'Titulacion\UserInscripcionController@store')->name('tema.store');
+
 
 
             });
@@ -57,3 +64,5 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function () {
 
 
 });
+
+

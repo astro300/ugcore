@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: blacksato
- * Date: 4/9/2017
- * Time: 10:12
- */
 namespace UGCore\Core\Entities\Titulacion;
 use UGCore\Core\Entities\CoreModel;
 
@@ -15,5 +9,20 @@ class MTInscripcion extends CoreModel
     protected $table='TB_TESIS';
     protected $connection='sqlsrv_bdacademico';
     protected $primaryKey='COD_TESIS';
-    protected $fillable=['COD_CARRERA','TEMA','ESTADO','FECHA_PRESENTO','FECHA_APRONEGA','FECHA_SUSTENTO','TIPT','RESPONSA1','RESPONSA2','FECSYS1','FECSYS2'];
+    protected $fillable=[
+    'COD_CARRERA',
+	'COD_TESIS',
+'ESTADO',
+'FECHA_APRONEGA',
+'FECHA_PRESENTO',
+'FECHA_SUSTENTO',
+'FECSYS1',
+'FECSYS2',
+'RESPONSA1',
+'RESPONSA2',
+'TEMA',
+'TIPT',
+'COD_PLECTIVO',
+'AREA_INVESTIGACION_ID'
+];
 }
