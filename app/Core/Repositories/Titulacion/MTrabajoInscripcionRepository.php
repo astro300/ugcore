@@ -11,6 +11,8 @@ namespace UGCore\Core\Respositories\Titulacion;
 
 use Illuminate\Http\Request;
 use UGCore\Core\Entities\Titulacion\MTInscripcion;
+
+
 use Storage;
 //use File;
 use Yajra\Datatables\Datatables;
@@ -27,9 +29,15 @@ class MTrabajoInscripcionRepository
 
     public function forSave(Request $request, $flagAll = false)
     {
-/*
-        \DB::connection('sqlsrv_bdacademico')->beginTransaction();
-        try {
+
+
+         try {
+            $variable=DB::connection('sqlsrv_bdacademico')->select("exec SP_TESIS_EGRESADO ?,?,?,?,?,?",[k,k,k,k,k,k]);
+            dd($variable);
+         /*   foreach ($variable as $item) {
+                
+
+            }
             if ($flagAll) {
                 $matrixz = DB::connection('sqlsrv_bdacademico')
                     ->table('TB_FACULTAD AS F')
@@ -79,14 +87,11 @@ class MTrabajoInscripcionRepository
                     'USUARIO_ACTUALIZA' => currentUser()->id,
                     'created_at' => Utils::getDateSQL(),
                     'updated_at' => Utils::getDateSQL()]]);
-            }
-
-            \DB::connection('sqlsrv_bdacademico')->commit();
+            }*/
         } catch (\Exception $ex) {
-            \DB::connection('sqlsrv_bdacademico')->rollback();
             throw new \Exception($ex);
         }
-*/
+
 
     }
 
@@ -148,9 +153,25 @@ class MTrabajoInscripcionRepository
          ->where('db2.id', 5)
          ->get();
        */
-/*
+
         return Datatables::of(
-            MTDatos::orderBy('TB_CARRERA.COD_CARRERA', 'DESC')
+MTInscripcion::orderBy('TB_TESIS.FECHA_PRESENTO', 'DESC')
+                ->join('BdAcademico.dbo.TB_CARRERA as TB_CARRERA', 'TB_CARRERA.COD_CARRERA', '=', 'TB_TESIS.COD_CARRERA')
+                ->join('BdAcademico.dbo.TB_FACULTAD as TB_FACULTAD', 'TB_FACULTAD.COD_FACULTAD', '=', 'TB_CARRERA.COD_FACULTAD')
+                ->where('TB_TESIS.ESTADO','=','I')
+                ->select('TB_TESIS.COD_TESIS', 'TB_TESIS.TEMA as tema','TB_FACULTAD.NOMBRE as facultad','TB_CARRERA.NOMBRE as carrera','TB_TESIS.FECHA_PRESENTO as fecha')->get()
+        //     )->add_column('actions', ' <a href=""><span class="fa fa-pencil"></span>&nbsp;Editar</a>')->make(true);
+
+
+        )
+            ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $COD_TESIS) }}" class="btn btn-primary btn-xs">&nbsp;Editar</a>|<a href="{{ route(\'titulacion.configuracion.delete\', $COD_TESIS) }}" onclick="
+return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
+    class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
+        aria-hidden="true">&nbsp;Eliminar</a>')
+            ->make(true);
+
+
+/*            MTDatos::orderBy('TB_CARRERA.COD_CARRERA', 'DESC')
                 ->join('BdAcademico.dbo.TB_CARRERA as TB_CARRERA', 'TB_CARRERA.COD_CARRERA', '=', 'TB_TIT_PARAMETRO.COD_CARRERA')
                 ->join('BdAcademico.dbo.TB_PLECTIVO as TB_PLECTIVO',
                     'TB_PLECTIVO.COD_PLECTIVO', '=', 'TB_TIT_PARAMETRO.COD_PLECTIVO')
