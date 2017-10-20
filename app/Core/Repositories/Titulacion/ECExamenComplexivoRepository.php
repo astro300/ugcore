@@ -14,19 +14,21 @@ class ECExamenComplexivoRepository
 
     public function ForDatatable($idcarrera)
     {
-
+        $var = DB::connection(sqlsrv_bdacademico)->select('EXEC SP_NOTAS_TITULACION');
+        var_dump($var);
+        return $var;
+/*
         return \Datatables::of(
-
-            /*select est.COD_ESTUDIANTE, f.NOMBRE, c.NOMBRE, (est.APELLIDO+' '+est.NOMBRE) as estudiante,
-            (case when mat.CS = 'R' then e.NOTA end) as NOTA,
-            (case when mat.CS = 'E' then e.NOTA end) as NO(case when mat.CS = 'R' then e.NOTA end) as NOTATA_GRACIA
-             from BdTitulacion.dbo.TB_TIT_MATRICULA ma
-            inner join BdTitulacion.dbo.TB_TIT_TIPO_MODALIDAD md on ma.TIPO_MODALIDAD = md.ID
-            left join BdAcademico.dbo.TB_EXAMEN_GRACIA e on ma.NUM_IDENTIFICACION = e.COD_ESTUDIANTE
-            left join BdAcademico.dbo.TB_MATERIA mat on e.COD_MATERIA = mat.COD_MATERIA
-            inner join BdAcademico.dbo.TB_ESTUDIANTE_DPERSONAL est on ma.NUM_IDENTIFICACION = est.COD_ESTUDIANTE
-            inner join BdAcademico.dbo.TB_CARRERA c on ma.COD_CARRERA = c.COD_CARRERA
-            inner join BdAcademico.dbo.TB_FACULTAD f on c.COD_FACULTAD = f.COD_FACULTAD*/
+        /*select est.COD_ESTUDIANTE, f.NOMBRE, c.NOMBRE, (est.APELLIDO+' '+est.NOMBRE) as estudiante,
+        (case when mat.CS = 'R' then e.NOTA end) as NOTA,
+        (case when mat.CS = 'E' then e.NOTA end) as NO(case when mat.CS = 'R' then e.NOTA end) as NOTATA_GRACIA
+         from BdTitulacion.dbo.TB_TIT_MATRICULA ma
+        inner join BdTitulacion.dbo.TB_TIT_TIPO_MODALIDAD md on ma.TIPO_MODALIDAD = md.ID
+        left join BdAcademico.dbo.TB_EXAMEN_GRACIA e on ma.NUM_IDENTIFICACION = e.COD_ESTUDIANTE
+        left join BdAcademico.dbo.TB_MATERIA mat on e.COD_MATERIA = mat.COD_MATERIA
+        inner join BdAcademico.dbo.TB_ESTUDIANTE_DPERSONAL est on ma.NUM_IDENTIFICACION = est.COD_ESTUDIANTE
+        inner join BdAcademico.dbo.TB_CARRERA c on ma.COD_CARRERA = c.COD_CARRERA
+        inner join BdAcademico.dbo.TB_FACULTAD f on c.COD_FACULTAD = f.COD_FACULTAD*/
             DB::connection('sqlsrv_bdacademico')
                 ->table('BdTitulacion.dbo.TB_TIT_MATRICULA as ma')
                 ->join('BdTitulacion.dbo.TB_TIT_TIPO_MODALIDAD as md','ma.TIPO_MODALIDAD','=','md.ID')
@@ -62,6 +64,7 @@ class ECExamenComplexivoRepository
         )
             // ->add_column('actions', ' <a href="{{ route(\'surveys.categories_surveys.edit\', $id) }}"><span class="fa fa-pencil"></span>&nbsp;Editar</a>')
             ->make(true);
+*/
     }
 
     protected function forupdate(Request $request,$id)
