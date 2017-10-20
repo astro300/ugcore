@@ -3,7 +3,7 @@
     Registro de Examen complexivo
 @endsection
 @section('masterTitleModule')
-    REGISTRO DE EXAMEN COMPLEXIVO
+    EXAMEN COMPLEXIVO
 @endsection
 @section('masterDescription')
     Pantalla de registro de notas de examen  complexivo
@@ -11,15 +11,15 @@
 
 @section('mainContent')
     <div class="col-lg-12">
-        {!! Field::select('excfacultad',$faculties,null,['empty'=>'seleccione','class'=>'select2','label'=>'FACULTAD: '])!!}
+        {!! Field::select('cmbFacultad', $faculties, null, ['empty' => 'Seleccione', 'class' => 'select2', 'label' => 'FACULTAD:'])!!}
 
     </div>
     <div class="col-lg-12">
-        {!! Field::select('excCarrera',[],null,['class'=>'select2','label'=>'CARRERA: ']) !!}
+        {!! Field::select('cmbCarrera', [], null, ['empty' => 'seleccione', 'class' => 'select2', 'label' => 'CARRERA:']) !!}
     </div>
     <div class="col-lg-12">
         <div class="table-responsive">
-            <table class="table table-bordered bg-white" id="tbExamenComplexivo">
+            <table class="table table-bordered bg-white" id="dtExamenComplexivo">
                 <thead>
 
                 <th>Facultad</th>
