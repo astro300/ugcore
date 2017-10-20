@@ -7,6 +7,7 @@ $(function () {
 
  $('#cedula_estudiante').on('keydown', function (e) {
     if (e.which === 9) {
+
         $("#nombre_estudiante").html('');
         if(this.value!=''){
 
@@ -14,6 +15,7 @@ $(function () {
         var objApiRest = new AJAXRest('/titulacion/trabajo/DatoUsuario/'+this.value, {}, 'POST');
         objApiRest.extractDataAjax(function (_resultContent, status) {
             if (status == 200) {
+                   $("#nombre_estudiante").append("<option value='' selected='selected'> * SELECCIONE ESTUDIANTE *</option>");
 
                 $.each(_resultContent.data,function(_key, _value){
                     $("#nombre_estudiante").append("<option value='"+_value.COD_ESTUDIANTE+"'>"+_value.NOMBRE_ESTUDIANTE+"</option>")
@@ -23,8 +25,46 @@ $(function () {
             }
         })
         }
-    }
+
+        $("#carrera_estudiante").html('');
+        if(this.value!=''){
+
+
+        var objApiRest = new AJAXRest('/titulacion/trabajo/DatoUsuarioEstudianteCarrera/'+this.value, {}, 'POST');
+        objApiRest.extractDataAjax(function (_resultContent, status) {
+            if (status == 200) {
+                   $("#carrera_estudiante").append("<option value='' selected='selected'> * SELECCIONE LA CARRERA *</option>");
+                $.each(_resultContent.data,function(_key, _value){
+                    $("#carrera_estudiante").append("<option value='"+_value.COD_CARRERA+"'>"+_value.NOMBRE_CARRERA+"</option>")
+                });
+            }else{
+                alertToast(_resultContent.message,3000);
+            }
+        })
+        }
+
+      }
     });
+
+    $("#carrera_estudiante").on('change', function () {
+        $("#tesis").html('');
+        if(this.value!=''){
+
+
+        var objApiRest = new AJAXRest('/titulacion/trabajo/DatosTrabajoTitulacion/'+this.value, {}, 'POST');
+        objApiRest.extractDataAjax(function (_resultContent, status) {
+            if (status == 200) {
+                   $("#tesis").append("<option value='' selected='selected'> * SELECCIONE LA CARRERA *</option>");
+                $.each(_resultContent.data,function(_key, _value){
+                    $("#tesis").append("<option value='"+_value.COD_TESIS+"'>"+_value.TEMA+"</option>")
+                });
+            }else{
+                alertToast(_resultContent.message,3000);
+            }
+        })
+        }
+    });
+
 
 
     $("#facultad").on('change', function () {
@@ -35,7 +75,7 @@ $(function () {
         var objApiRest = new AJAXRest('/titulacion/Configuraciones/'+this.value, {}, 'POST');
         objApiRest.extractDataAjax(function (_resultContent, status) {
             if (status == 200) {
-                   $("#carrera").append("<option value='' selected='selected'> * Seleccione la carrera *</option>");
+                   $("#carrera").append("<option value='' selected='selected'> * SELECCIONE LA CARRERA *</option>");
                 $.each(_resultContent.data,function(_key, _value){
                     $("#carrera").append("<option value='"+_value.COD_CARRERA+"'>"+_value.NOMBRE+"</option>")
                 });
@@ -55,7 +95,7 @@ $(function () {
         objApiRest.extractDataAjax(function (_resultContent, status) {
             if (status == 200) {
 
-                  $("#ciclo").append("<option value='' selected='selected'> * Seleccion el Periodo Lectivo *</option>");
+                  $("#ciclo").append("<option value='' selected='selected'> * SELECCIONE EL PERIODO LECTIVO *</option>");
 
                 $.each(_resultContent.data,function(_key, _value){
                     $("#ciclo").append("<option value='"+_value.COD_PLECTIVO+"'>"+_value.DESCRIPCION+"</option>")
@@ -75,7 +115,7 @@ $(function () {
         var objApiRest = new AJAXRest('/titulacion/Configuraciones-Parametro/'+this.value, {}, 'POST');
         objApiRest.extractDataAjax(function (_resultContent, status) {
             if (status == 200) {
-                $("#etapa").append("<option value='' selected='selected'> * Seleccion la etapa *</option>");
+                $("#etapa").append("<option value='' selected='selected'> * SELECCIONE LA ETAPA *</option>");
                 $.each(_resultContent.data,function(_key, _value){
                     $("#etapa").append("<option value='"+_value.CODIGO+"'>"+_value.DESCRIPCION+"</option>")
                 });
@@ -93,6 +133,7 @@ $(function () {
         responsive: true, "oLanguage": {
             "sUrl": "/js/config/datatablespanish.json"
         },
+        "lengthMenu": [5 ,10, 25, 50, 75, 100 ],
         "aoColumnDefs": [],
         "processing": true,
         "serverSide": true,
@@ -103,10 +144,12 @@ $(function () {
 
 
             
-            {data: 'tema'},
-             {data: 'facultad'},
-            {data: 'carrera'},
-            {data: 'fecha'},
+             {data: 'carrera'},
+             {data: 'ciclo'},
+            {data: 'etapa'},
+            {data: 'tipo'},
+             {data: 'fecha_inicio'},
+             {data: 'fecha_final'}, 
     
 
              {data: 'acciones', "bSortable": false, "searchable": false, "targets": 0,
@@ -122,6 +165,7 @@ $(function () {
         responsive: true, "oLanguage": {
             "sUrl": "/js/config/datatablespanish.json"
         },
+        "lengthMenu": [5 ,10, 25, 50, 75, 100 ],
         "aoColumnDefs": [],
         "processing": true,
         "serverSide": true,
@@ -131,13 +175,12 @@ $(function () {
         "columns": [
 
 
-            
+           {data: 'tema'},
+             {data: 'facultad'},
             {data: 'carrera'},
-             {data: 'ciclo'},
-            {data: 'etapa'},
-            {data: 'tipo'},
-             {data: 'fecha_inicio'},
-             {data: 'fecha_final'},
+            {data: 'fecha'},
+
+      
 
              {data: 'acciones', "bSortable": false, "searchable": false, "targets": 0,
                 "render":function(data, type, row ){

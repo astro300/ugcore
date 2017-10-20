@@ -3667,6 +3667,7 @@ return array(
     'UGCore\\Core\\Entities\\Surveys\\TypeQuestion' => $baseDir . '/app/Core/Entities/Surveys/TypeQuestion.php',
     'UGCore\\Core\\Entities\\Titulacion\\ExamenComplexivo' => $baseDir . '/app/Core/Entities/Titulacion/ExamenComplexivo.php',
     'UGCore\\Core\\Entities\\Titulacion\\MTDatos' => $baseDir . '/app/Core/Entities/Titulacion/MTDatos.php',
+    'UGCore\\Core\\Entities\\Titulacion\\MTInscripcion' => $baseDir . '/app/Core/Entities/Titulacion/MTInscripcion.php',
     'UGCore\\Core\\Entities\\Titulacion\\Matricula' => $baseDir . '/app/Core/Entities/Titulacion/Matricula.php',
     'UGCore\\Core\\Entities\\Uath\\HorasExtrasPlanificacion' => $baseDir . '/app/Core/Entities/Uath/HorasExtrasPlanificacion.php',
     'UGCore\\Core\\Entities\\Uath\\HorasExtrasPlanificacionEmpleado' => $baseDir . '/app/Core/Entities/Uath/HorasExtrasPlanificacionEmpleado.php',

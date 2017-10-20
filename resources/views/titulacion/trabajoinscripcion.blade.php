@@ -15,12 +15,10 @@
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Datos Generales</a></li>
-                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Tutores</a></li>
-                <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Revisores</a></li>
-                <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="true">Estudiantes</a></li>
-                <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="true">Tribunal de Sustentaci&oacute;n</a>
-                </li>
+                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">DATOS GENERALES</a></li>
+                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">DOCENTES</a></li>
+                <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">ESTUDIANTES</a></li>
+                    </li>
 
 
             </ul>
@@ -30,32 +28,34 @@
                     <div class="row">
 
                         <div class="col-lg-5">
+                                {!! Form::open(['route'=>'titulacion.trabajo.tema.store', 'enctype'=>'multipart/form-data']) !!}
 
                             <div class="panel-body">
 
                                 {!! Field::text('tema',['class'=>'form-control','id'=>'trabajo','placeholder'=>'Tema de Titulación', 'label'=>"TEMA DE TITULACIÓN(TÍTULO):"]) !!}
 
 
-                                {!! Field::select('facultad',$faculties,null,['empty'=>'seleccione','class'=>'select2','label'=>'FACULTAD: '])!!}
+                                {!! Field::select('facultad',$faculties,null,['empty'=>'* seleccione','class'=>'select2','label'=>'FACULTAD: '])!!}
                                 {!! Field::select('carrera',[],null,['empty'=>'seleccione','class'=>'select2','label'=>'CARRERA: ']) !!}
                                 {!! Field::select('ciclo',[],null,['empty'=>'seleccione','class'=>'select2','label'=>'CICLO: ']) !!}
-
-
+                                {!! Field::select('area_investigacion',[],null,['empty'=>'seleccione','class'=>'select2','label'=>'AREA DE INVESTIGACIÓN: ']) !!}
+                                
                             </div>
 
                             <div class="panel-footer">
                                 <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
                             </div>
+                            {!!Form::close()!!}
                         </div>
                         <div class="col-lg-7">
                             <div class="table-responsive">
                                 <table class="table table-bordered bg-white" id="TrabajoInscripcion">
                                     <thead>
 
-                                    <th>Tema</th>
-                                    <th>Facultad</th>
-                                    <th>Carrera</th>
-                                    <th>Fecha de Registro</th>
+                                    <th>TEMA</th>
+                                    <th>FACULTAD</th>
+                                    <th>CARRERA</th>
+                                    <th>FECHA DE REGISTRO</th>
 
                                     <th>ACCIONES</th>
                                     </thead>
@@ -75,7 +75,14 @@
 
                                 {!! Field::text('cedula_tutor',['class'=>'form-control','id'=>'cedula_tutor','placeholder'=>'Cédula del Tutor', 'label'=>'CÉDULA DEL TUTOR:'])!!}
 
-                                {!! Field::text('nombre_tutor',' ',['class'=>'form-control','id'=>'nombre_tutor','placeholder'=>'Nombre del Tutor', 'label'=>'NOMBRE DEL TUTOR:'])!!}
+                                 {!! Field::select('nombre_tutor',[],null,['class'=>'select2','label'=>'NOMBRE DEL TUTOR:','empty'=>'-SELECCIONE-']) !!}
+
+                                 {!! Field::select('carrera_tutor',[],null,['class'=>'select2','label'=>'CARRERA:','empty'=>'-SELECCIONE-']) !!}
+
+                                 {!! Field::select('trabajo_titulacion',[],null,['class'=>'select2','label'=>'NOMBRE DEL TRABAJO DE TITULACION:','empty'=>'-SELECCIONE-']) !!}
+
+                                  {!! Field::select('TipoDocente',[],null,['class'=>'select2','label'=>'TIPO DE DOCENTE:','empty'=>'-SELECCIONE-']) !!}
+
 
                             </div>
 
@@ -88,10 +95,11 @@
                                 <table class="table table-bordered bg-white" id="Tutores">
                                     <thead>
 
-                                    <th>Depende1</th>
-                                    <th>Depende2</th>
-
-
+                                    <th>DOCENTE</th>
+                                    <th>TRABAJO</th>
+                                    <th>CARRERA</th>
+                                     <th>PERIODO LECTIVO</th>
+                                    <th>TIPO DOCENTE</th>
                                     <th>ACCIONES</th>
                                     </thead>
                                 </table>
@@ -99,46 +107,10 @@
                         </div>
                     </div>
                 </div>
+
 
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="tab_3">
-
-                    <div class="row">
-
-                        <div class="col-lg-5">
-
-                            <div class="panel-body">
-
-                                {!! Field::text('cedula_revisor',['class'=>'form-control','id'=>'cedula_revisor','placeholder'=>'Cédula del Revisor', 'label'=>'CÉDULA DEL REVISOR:'])!!}
-
-                                {!! Field::text('nombre_revisor',' ',['class'=>'form-control','id'=>'nombre_revisor','placeholder'=>'Nombre del Revisor', 'label'=>'NOMBRE DEL REVISOR:'])!!}
-
-                            </div>
-
-                            <div class="panel-footer">
-                                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
-                            </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="table-responsive">
-                                <table class="table table-bordered bg-white" id="Revisores">
-                                    <thead>
-
-                                    <th>Depende1</th>
-                                    <th>Depende2</th>
-
-
-                                    <th>ACCIONES</th>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="tab_4">
 
 
                     <div class="row">
@@ -150,6 +122,11 @@
 
 
                                  {!! Field::select('nombre_estudiante',[],null,['class'=>'select2','label'=>'NOMBRE DEL ESTUDIANTE:','empty'=>'-SELECCIONE-']) !!}
+
+
+                                 {!! Field::select('carrera_estudiante',[],null,['class'=>'select2','label'=>'CARRERA:','empty'=>'-SELECCIONE-']) !!}
+
+                                 {!! Field::select('tesis',[],null,['class'=>'select2','label'=>'NOMBRE DEL TRABAJO DE TITULACION:','empty'=>'-SELECCIONE-']) !!}
                               
 
                             </div>
@@ -163,45 +140,10 @@
                                 <table class="table table-bordered bg-white" id="Estudiante">
                                     <thead>
 
-                                    <th>Depende1</th>
-                                    <th>Depende2</th>
-
-
-                                    <th>ACCIONES</th>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="tab-pane" id="tab_5">
-
-
-                    <div class="row">
-
-                        <div class="col-lg-5">
-                            <div class="panel-body">
-
-                                {!! Field::text('cedula_docente',['class'=>'form-control','id'=>'cedula_docente','placeholder'=>'Cédula del Docente', 'label'=>'CÉDULA DEL DOCENTE:'])!!}
-
-                                {!! Field::text('nombre_docente',' ',['class'=>'form-control','id'=>'nombre_docente','placeholder'=>'Nombre del Docente', 'label'=>'NOMBRE DEL DOCENTE:'])!!}
-
-                            </div>
-
-                            <div class="panel-footer">
-                                <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;AGREGAR</button>
-                            </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="table-responsive">
-                                <table class="table table-bordered bg-white" id="Docente">
-                                    <thead>
-
-                                    <th>Depende1</th>
-                                    <th>Depende2</th>
-
+                                    <th>ESTUDIANTE</th>
+                                    <th>TRABAJO</th>
+                                    <th>CARRERA</th>
+                                     <th>PERIODO LECTIVO</th>
 
                                     <th>ACCIONES</th>
                                     </thead>
@@ -211,6 +153,8 @@
 
                     </div>
                 </div>
+
+              
 
 
                 <!-- /.tab-pane -->
