@@ -1,34 +1,42 @@
-$("#excfacultad").on('change', function () {
+$("#cmbFacultad").on('change',
+    function ()
+    {
+        var carrera = 'cmbCarrera';
+        var ruta    = '/titulacion/Configuraciones/';
+        var value   = this.value;
+        changeCarrera(carrera, ruta,value);
+    });
 
-    var carrera = 'excCarrera';
-    var ruta = '/titulacion/Configuraciones/';
-    var value = this.value;
-    changeCarrer(carrera, ruta,value);
-});
-
-
-function changeCarrer(carrera, ruta, value)
+function changeCarrera(carrera, ruta, value)
 {
-    $('#'+carrera+'').html('');
-    if(this.value!=''){
-
-
+    $('#' + carrera + '').html('');
+    if(this.value!='')
+    {
         var objApiRest = new AJAXRest(ruta+''+value, {}, 'POST');
-        objApiRest.extractDataAjax(function (_resultContent, status) {
-            if (status == 200) {
-
-                $.each(_resultContent.data,function(_key, _value){
-                    $('#'+carrera).append("<option value='"+_value.COD_CARRERA+"'>"+_value.NOMBRE+"</option>")
+        objApiRest.extractDataAjax(function (_resultContent, status)
+        {
+            if (status == 200)
+            {
+                $.each(_resultContent.data,function(_key, _value)
+                {
+                    $('#'+carrera).append("<option value='" + _value.COD_CARRERA + "'>" + _value.NOMBRE + "</option>")
                 });
-            }else{
+            }
+            else
+            {
                 alertToast(_resultContent.message,3000);
             }
         })
     }
 }
 
-
-$("#excCarrera").on('change', function() {
+/*
+Evento:     Change
+Componente: cmbCarrera
+Tipo:       comboBox
+Objetivo:   Obtener listado de
+ */
+$("#cmbCarrera").on('change', function() {
 
     var id = this.value;
     changeDatatable(id);
@@ -38,50 +46,54 @@ $("#excCarrera").on('change', function() {
 function changeDatatable(id)
 {
     //var id = this.value;
-    $('#tbExamenComplexivo').DataTable().destroy();
-    $('#tbobyExamenComplexivo').html('');
-    if(id != ''){
+    $('#dtExamenComplexivo').DataTable().destroy();
+    $('#tbobyExamenComplexivo').html('ALEJANDRO');
+    console.log(id);
+    if(id != '')
+    {
         $.fn.dataTable.ext.errMode = 'throw';
-        tablaPlanificacion=$('#tbExamenComplexivo').DataTable({
-            responsive: true,"oLanguage": {
-                "sUrl": "/js/config/datatablespanish.json"
-            },
-            "lengthMenu": [[4, -1], [4, "All"]],
-            "order": [[ 1, 'desc' ]],
-            "searching": true,
-            "info":  false,
-            "ordering": false,
-            "bPaginate": true,
-            "processing": true,
-            "serverSide": true,
-            "deferRender": true,
-            "destroy": true,
-            "ajax": "/titulacion/complexivo/datatables/"+id,
-            "columns":[
-                {data: 'FACULTAD', "width": "20%"},
-                {data: 'CARRERA',"width": "20%"},
-                {data: 'ESTUDIANTE',"width": "25%"},
-                {data: 'NOTA_COMPLEXIVO'},
-                {data: 'NOTA_GRACIA'},
-                {data: 'NOTA_FINAL'},
-                {data: 'OBSERVACION',"width": "25%"},
+        $('#dtExamenComplexivo').DataTable(
+            {
+                responsive: true,"oLanguage":
                 {
-                    data: 'actions',
-                    "bSortable": false,
-                    "searchable": false,
-                    "targets": 0,
-                    "render": function (data, type, row)
+                    "sUrl": "/js/config/datatablespanish.json"
+                },
+                "lengthMenu": [[4, -1], [4, "All"]],
+                "order": [[ 1, 'desc' ]],
+                "searching": true,
+                "info":  false,
+                "ordering": false,
+                "bPaginate": true,
+                "processing": true,
+                "serverSide": true,
+                "deferRender": true,
+                "destroy": true,
+                "ajax": "/titulacion/complexivo/datatables/"+id,
+                "columns":[
+                    {data: 'FACULTAD', "width": "20%"},
+                    {data: 'CARRERA',"width": "20%"},
+                    {data: 'ESTUDIANTE',"width": "25%"},
+                    {data: 'NOTA_COMPLEXIVO'},
+                    {data: 'NOTA_GRACIA'},
+                    {data: 'NOTA_FINAL'},
+                    {data: 'OBSERVACION',"width": "25%"},
                     {
-                        return  "<label class='btn btn-info btn-sm' data-toggle='modal' " +
-                            "data-target='#ModalNotasComplexivo' data-popup='tooltip' " +
-                            "data-placement='bottom' data-original-title='Editar' onclick='" +
-                            "ModalEdit("+row.id+", \""+row.ESTUDIANTE+"\","+row.NOTA_COMPLEXIVO+", "+row.NOTA_GRACIA+",\""+row.OBSERVACION+"\")'>" +
-                            "<i class='fa fa-edit'></i></label>";
+                        data: 'actions',
+                        "bSortable": false,
+                        "searchable": false,
+                        "targets": 0,
+                        "render": function (data, type, row)
+                        {
+                            return  "<label class='btn btn-info btn-sm' data-toggle='modal' " +
+                                "data-target='#ModalNotasComplexivo' data-popup='tooltip' " +
+                                "data-placement='bottom' data-original-title='Editar' onclick='" +
+                                "ModalEdit("+row.id+", \""+row.ESTUDIANTE+"\","+row.NOTA_COMPLEXIVO+", "+row.NOTA_GRACIA+",\""+row.OBSERVACION+"\")'>" +
+                                "<i class='fa fa-edit'></i></label>";
+                        }
                     }
-                }
 
-            ]
-        }).ajax.reload();
+                ]
+            }).ajax.reload();
     }
     else
     {
@@ -134,7 +146,7 @@ function GuardarNotas() {
             //$('#AdmMateriasCursos').dataTable()._fnAjaxUpdate();
             alertToastSuccess(_resultContent.message, 3500);
             $('#ModalNotasComplexivo').modal('hide');
-            var Carrera_id = $("#excCarrera").val();
+            var Carrera_id = $("#cmbCarrera").val();
             changeDatatable(Carrera_id);
         } else {
             alertToast(_resultContent.message, 3500);
@@ -144,7 +156,7 @@ function GuardarNotas() {
 
 }
 
-$('#tbExamenComplexivo').on( 'click', 'tbody td:not(:first-child)', function (e) {
+$('#dtExamenComplexivo').on( 'click', 'tbody td:not(:first-child)', function (e) {
     var x=1;
     editor.inline( this );
 } );
