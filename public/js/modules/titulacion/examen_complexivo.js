@@ -17,6 +17,7 @@ function changeCarrera(carrera, ruta, value)
         {
             if (status == 200)
             {
+                $('#'+carrera).append("<option value='' selected='selected'>Seleccione</option>");
                 $.each(_resultContent.data,function(_key, _value)
                 {
                     $('#'+carrera).append("<option value='" + _value.COD_CARRERA + "'>" + _value.NOMBRE + "</option>")
@@ -47,8 +48,7 @@ function changeDatatable(id)
 {
     //var id = this.value;
     $('#dtExamenComplexivo').DataTable().destroy();
-    $('#tbobyExamenComplexivo').html('ALEJANDRO');
-    console.log(id);
+    $('#tbobyExamenComplexivo').html('');
     if(id != '')
     {
         $.fn.dataTable.ext.errMode = 'throw';
@@ -68,10 +68,10 @@ function changeDatatable(id)
                 "serverSide": true,
                 "deferRender": true,
                 "destroy": true,
-                "ajax": "/titulacion/complexivo/datatables/"+id,
+                "ajax": "/titulacion/complexivo/getDtExamenComplexivo/" + id,
                 "columns":[
-                    {data: 'FACULTAD', "width": "20%"},
-                    {data: 'CARRERA',"width": "20%"},
+                    {data: 'FACULTAD',  "width": "20%"},
+                    {data: 'CARRERA',   "width": "20%"},
                     {data: 'ESTUDIANTE',"width": "25%"},
                     {data: 'NOTA_COMPLEXIVO'},
                     {data: 'NOTA_GRACIA'},

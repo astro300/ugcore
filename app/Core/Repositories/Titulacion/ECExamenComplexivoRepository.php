@@ -12,49 +12,9 @@ use UGCore\Core\Entities\Titulacion\Matricula;
 class ECExamenComplexivoRepository
 {
 
-    public function ForDatatable($idcarrera)
+    public function getDtExamenComplexivo($idcarrera)
     {
-        $var = DB::connection('sqlsrv_bdacademico')->select('EXEC SP_NOTAS_TITULACION_COMPLEXIVO ?', [$idcarrera]);
-        dd($var);
-        return $var;
-/*
-
-            DB::connection('sqlsrv_bdacademico')
-                ->table('BdTitulacion.dbo.TB_TIT_MATRICULA as ma')
-                ->join('BdTitulacion.dbo.TB_TIT_TIPO_MODALIDAD as md','ma.TIPO_MODALIDAD','=','md.ID')
-                ->leftJoin('BdAcademico.dbo.TB_EXAMEN_GRACIA as complex', 'ma.NUM_IDENTIFICACION', '=', 'complex.COD_ESTUDIANTE')
-                ->leftJoin('BdAcademico.dbo.TB_MATERIA as mat', 'complex.COD_MATERIA','=','mat.COD_MATERIA')
-                ->join('BdAcademico.dbo.TB_ESTUDIANTE_DPERSONAL as e','ma.NUM_IDENTIFICACION','=','e.COD_ESTUDIANTE')
-                ->join('BdAcademico.dbo.TB_CARRERA as c','ma.COD_CARRERA','=','c.COD_CARRERA')
-                ->join('BdAcademico.dbo.TB_FACULTAD as f','c.COD_FACULTAD','=','f.COD_FACULTAD')
-                ->select('ma.N_ID as id','f.NOMBRE as FACULTAD','c.NOMBRE as CARRERA',
-                    DB::raw("e.APELLIDO+' '+e.NOMBRE  as ESTUDIANTE"),
-                    DB::raw("(case when mat.CS = 'EC' then complex.NOTA end) as NOTA"),
-                    DB::raw("(case when mat.CS = 'ECG' then complex.NOTA end) as NOTA_GRACIA"),
-                    DB::raw("(case when complex.NOTA_COMPLEXIVO is not null then
-                                 case when
-                                    complex.NOTA_GRACIA is not null
-                                 then
-                                    case when
-                                        complex.NOTA_COMPLEXIVO > complex.NOTA_GRACIA
-                                    then 
-                                        complex.NOTA_COMPLEXIVO
-                                    else
-                                        complex.NOTA_GRACIA
-                                    end
-                                 else
-                                    complex.NOTA_COMPLEXIVO
-                                 end
-                               else
-                                null
-                               end ) as NOTA_FINAL"), DB::raw("(case when complex.OBSERVACION IS NULL THEN '' ELSE complex.OBSERVACION END ) OBSERVACION")
-                )
-                ->where('ma.COD_CARRERA','=',$idcarrera)
-                ->get()
-        )
-            // ->add_column('actions', ' <a href="{{ route(\'surveys.categories_surveys.edit\', $id) }}"><span class="fa fa-pencil"></span>&nbsp;Editar</a>')
-            ->make(true);
-*/
+        return DataTables::of(DB::connection('sqlsrv_bdacademico')->select('EXEC SP_NOTAS_TITULACION_COMPLEXIVO ?', [$idcarrera]))->make(true);
     }
 
     protected function forupdate(Request $request,$id)
