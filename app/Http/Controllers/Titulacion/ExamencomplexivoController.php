@@ -36,8 +36,9 @@ class ExamencomplexivoController extends Controller
     /*
      * Llena el dt registro de notas del examen complexivo en el evento change del select de carrera
      */
-    public function getDatatable($idcarrera){
-        return $this->datosRPY->ForDatatable($idcarrera);
+    public function getDtExamenComplexivo($idcarrera)
+    {
+        return $this->datosRPY->getDtExamenComplexivo($idcarrera);
     }
 
     /**
