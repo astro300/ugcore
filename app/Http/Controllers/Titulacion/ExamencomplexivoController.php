@@ -57,9 +57,9 @@ class ExamencomplexivoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, $id, $num_secuncia)
     {
-        $response = $this->datosRPY->forSaveOrUpdate($request,$id);
+        $response = $this->datosRPY->forSaveOrUpdate($request,$id,$num_secuncia);
         return response()->json($response, 200);
     }
 
