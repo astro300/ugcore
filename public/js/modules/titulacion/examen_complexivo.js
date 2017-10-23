@@ -58,7 +58,7 @@ function changeDatatable(id)
                 {
                     "sUrl": "/js/config/datatablespanish.json"
                 },
-                "lengthMenu": [[4, -1], [4, "All"]],
+                "lengthMenu": [[10, -1], [10, "All"]],
                 "order": [[ 1, 'desc' ]],
                 "searching": true,
                 "info":  false,
@@ -76,7 +76,7 @@ function changeDatatable(id)
                     {data: 'NOTA_COMPLEXIVO'},
                     {data: 'NOTA_GRACIA'},
                     {data: 'NOTA_FINAL'},
-                    {data: 'OBSERVACION',"width": "25%"},
+                    // {data: 'OBSERVACION',"width": "25%"},
                     {
                         data: 'actions',
                         "bSortable": false,
@@ -87,7 +87,7 @@ function changeDatatable(id)
                             return  "<label class='btn btn-info btn-sm' data-toggle='modal' " +
                                 "data-target='#ModalNotasComplexivo' data-popup='tooltip' " +
                                 "data-placement='bottom' data-original-title='Editar' onclick='" +
-                                "ModalEdit("+row.id+", \""+row.ESTUDIANTE+"\","+row.NOTA_COMPLEXIVO+", "+row.NOTA_GRACIA+",\""+row.OBSERVACION+"\")'>" +
+                                "ModalEdit("+row.COD_ESTUDIANTE+", \""+row.ESTUDIANTE+"\","+row.NOTA_COMPLEXIVO+", "+row.NOTA_GRACIA+",\""+row.OBSERVACION+"\", \""+row.NUM_SECUENCIAXX+"\")'>" +
                                 "<i class='fa fa-edit'></i></label>";
                         }
                     }
@@ -104,13 +104,14 @@ function changeDatatable(id)
 
 //Insert or Update notas examen
 
-function ModalEdit(id, nombre, complexivo,eGracia,observacion)
+function ModalEdit(id, nombre, complexivo,eGracia,observacion,n_secuncia)
 {
     // var data = table.row($(this).parents("tr")).data();
     //var x = $("#tbSeguimiento").DataTable().rows();
 
 
     $('#idmatriculado').val(id);
+    $('#num_secuencia').val(n_secuncia);
     $("#lbnombre").html('&nbsp;&nbsp;&nbsp;'+nombre);
     $('#NotaeComplexivo').val(complexivo);
     $('#NotaGracia').val(eGracia);
@@ -135,11 +136,13 @@ $("#btnGuardar").on('click', function(){
 
 function GuardarNotas() {
     var id =  $('#idmatriculado').val();
-    var objApiRest = new AJAXRest('/titulacion/complexivo/store/'+id, {
+    var secuencia = $('#num_secuencia').val();
+
+    var objApiRest = new AJAXRest('/titulacion/complexivo/store/'+id+'/'+secuencia, {
         MATRICULA_ID: id,
         NOTA_COMPLEXIVO: $("#NotaeComplexivo").val(),
         NOTA_GRACIA: $("#NotaGracia").val(),
-        OBSERVACION: $("#observacion").val()
+        //OBSERVACION: $("#observacion").val()
     }, 'post');
     objApiRest.extractDataAjax(function (_resultContent) {
         if (_resultContent.status == 200) {

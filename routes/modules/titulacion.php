@@ -9,7 +9,7 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function () {
 
                 Route::get('notas', 'Titulacion\ExamencomplexivoController@index')->name('notas.index');
                 Route::get('getDtExamenComplexivo/{idcarrera}', 'Titulacion\ExamencomplexivoController@getDtExamenComplexivo');
-                Route::post('store/{idmatricula}', 'Titulacion\ExamencomplexivoController@store');
+                Route::post('store/{idmatricula}/{num_secuencia}', 'Titulacion\ExamencomplexivoController@store');
 
             });
 

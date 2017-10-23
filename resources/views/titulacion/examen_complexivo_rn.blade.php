@@ -56,6 +56,7 @@
                 <div class="modal-body">
 
                     {{ Form::hidden('idmatriculado', null,['id'=>'idmatriculado']) }}
+                    {{ Form::hidden('num_secuencia', null,['id'=>'num_secuencia']) }}
 
                     <div class="form-group">
                         {{--{!! Field::text('nombreEstudiente', null,  ["class"=>"form-control","label"=> "Nombre:" ]) !!}--}}
