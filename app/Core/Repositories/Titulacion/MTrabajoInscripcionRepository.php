@@ -29,6 +29,10 @@ class MTrabajoInscripcionRepository
 
     public function forSave(Request $request, $flagAll = false)
     {
+<<<<<<< Updated upstream
+=======
+      
+>>>>>>> Stashed changes
         $request->fecha_presento=$fecha_presento=Utils::getDateSQL();
         $request->estado=$estado='I';
         $request->fecha_apronega=$fecha_apronega=null;
@@ -39,6 +43,10 @@ class MTrabajoInscripcionRepository
         $request->fecsys1=$fecsys1=Utils::getDateSQL();
         $request->fecsys2=$fecsys2=null;
 
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
          try {
             $respuesta = DB::connection('sqlsrv_bdacademico')->SELECT("exec SP_INGRESO_TESIS ?,?,?,?,?,?,?,?,?,?,?,?,?,?",
                 [NULL,
@@ -55,7 +63,12 @@ class MTrabajoInscripcionRepository
                  $request->fecsys2,
                  $request->ciclo,
                  $request->area_investigacion]);
+<<<<<<< Updated upstream
 
+=======
+            dd($variable);
+        
+>>>>>>> Stashed changes
         } catch (\Exception $ex) {
             throw new \Exception($ex);
         }
@@ -65,24 +78,6 @@ class MTrabajoInscripcionRepository
 
     public function forUpdate(Request $request, MTDatos $datos)
     {
-        //     dd($request);
-
-/*
-        //lenar todos $datos->fill($request->all());
-
-        $datos->COD_TIPO_PARAMETRO = $request->etapa;
-        $datos->COD_PLECTIVO = $request->ciclo;
-        $datos->COD_CARRERA = $request->carrera;
-        $datos->FECHA_INICIO = $request->fecha_inicio;
-        $datos->FECHA_FIN = $request->fecha_final;
-        $datos->ESTADO = '1';
-
-        $datos->USUARIO_ACTUALIZA = currentUser()->id;
-        $datos->TIPO = $request->tipo;
-
-        //dd($datos);
-        $datos->save();
-/**/
 
     }
 
@@ -132,7 +127,7 @@ MTInscripcion::orderBy('TB_TESIS.FECHA_PRESENTO', 'DESC')
 
 
         )
-            ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $COD_TESIS) }}" class="btn btn-primary btn-xs">&nbsp;Editar</a>|<a href="{{ route(\'titulacion.configuracion.delete\', $COD_TESIS) }}" onclick="
+            ->addColumn('actions', '<a href="{{ route(\'titulacion.trabajo.TrabajoInscripion.edit\', $COD_TESIS) }}" class="btn btn-primary btn-xs">&nbsp;Editar</a>|<a href="{{ route(\'titulacion.configuracion.delete\', $COD_TESIS) }}" onclick="
 return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
     class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
         aria-hidden="true">&nbsp;Eliminar</a>')
