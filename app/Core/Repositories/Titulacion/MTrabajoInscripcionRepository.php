@@ -29,10 +29,41 @@ class MTrabajoInscripcionRepository
 
     public function forSave(Request $request, $flagAll = false)
     {
+       /* $request->cod_tesis = DB::connection('sqlsrv_bdacademico')
+                    ->table('TB_FACULTAD AS F')
+                    ->join('TB_CARRERA AS C', 'F.COD_FACULTAD', '=', 'C.COD_FACULTAD')
+                    ->where('F.COD_FACULTAD', '<', '26')
+                    ->where('C.NOACADE', '=', 0)
+                    ->where('C.ESTADO_CARRERA', '=', 'A')
+                    ->where('C.COD_CCARRERA', '=', 1)
+                    ->select('F.COD_FACULTAD AS COD_FACULTAD',
+                        DB::raw('LTRIM(RTRIM(C.COD_CARRERA)) AS COD_CARRERA'))->get();*/
+        $request->fecha_presento=$fecha_presento=Utils::getDateSQL();
+        $request->estado=$estado='I';
+        $request->fecha_apronega=$fecha_apronega=null;
+        $request->fecha_sustenta=$fecha_sustenta=null;
+        $request->tipt=$tipt=null;
+        $request->responsa1=$responsa1=currentUser()->id;
+        $request->responsa2=$responsa2=null;
+        $request->fecsys1=$fecsys1=Utils::getDateSQL();
+        $request->fecsys2=$fecsys2=null;
 
-
+        //dd($request);
          try {
-            $variable=DB::connection('sqlsrv_bdacademico')->select("exec SP_TESIS_EGRESADO ?,?,?,?,?,?",[k,k,k,k,k,k]);
+            $variable=DB::connection('sqlsrv_bdacademico')->select("exec SP_INGRESO_TESIS ?,?,?,?,?,?,?,?,?,?,?,?,?",
+                [$request->carrera,
+                 $request->tema,
+                 $request->estado,
+                 $request->fecha_presento,
+                 $request->fecha_apronega,
+                 $request->fecha_sustenta,
+                 $request->tipt,
+                 $request->responsa1,
+                 $request->responsa2,
+                 $request->fecsys1,
+                 $request->fecsys2,
+                 $request->ciclo,
+                 $request->area_investigacion]);
             dd($variable);
          /*   foreach ($variable as $item) {
                 

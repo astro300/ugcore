@@ -197,17 +197,6 @@ class SelectController extends Controller
         }
     }
 
-    public function getTutorCategoria()
-    {
-
-
-    }
-    public function getAreaCarrera(){
-
-        
-    }
-
-
 
         public function SearchPersonCarrera_Titulacion($cedula,$type='json')
     {
@@ -366,6 +355,47 @@ public function  getEtapa_Modulo($id='0',$response='http'){
             $result=$result->pluck('DESCRIPCION', 'COD_PLECTIVO')->toArray();
            return $result;
         }
+    }
+
+
+public function getAreaCarrera($carrera,$type='json')
+{
+        $result = DB::connection('sqlsrv_bdacademico')
+            ->table('TB_AREA_INVESTIGACION AS C')
+            ->where('C.COD_CARRERA', '=', $carrera)
+            ->where('C.ESTADO','=','A')
+          
+            ->groupBy('C.N_ID', 'C.DESCRIPCION')
+            ->orderBy('C.DESCRIPCION', 'ASC')
+            ->select('C.N_ID AS N_ID','C.DESCRIPCION AS DESCRIPCION')
+            ;
+        if($type=='json'){
+            $result=$result->get('DESCRIPCION', 'N_ID');
+            $listaCarreras['data']=$result;
+            return response()->json($listaCarreras, 200);
+        }else{
+            $result=$result->pluck('DESCRIPCION', 'N_ID')->toArray();
+           return $result;
+        }
+}
+    public function getTutorCategoria($type='json')
+    {
+    $result = DB::connection('sqlsrv_bdacademico')
+            ->table('TB_TESIS_TUTOR_CATEGORIA AS C')
+            ->where('C.ESTADO','=','A')          
+            ->groupBy('C.N_ID', 'C.DESCRIPCION')
+            ->orderBy('C.DESCRIPCION', 'ASC')
+            ->select('C.N_ID AS N_ID','C.DESCRIPCION AS DESCRIPCION')
+            ;
+        if($type=='json'){
+            $result=$result->get('DESCRIPCION', 'N_ID');
+            $listaCarreras['data']=$result;
+            return response()->json($listaCarreras, 200);
+        }else{
+            $result=$result->pluck('DESCRIPCION', 'N_ID')->toArray();
+           return $result;
+        }
+
     }
 
 }

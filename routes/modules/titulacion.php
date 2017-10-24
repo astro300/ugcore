@@ -47,7 +47,8 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function () {
                 Route::post('DatoUsuario/{cedula}', 'Titulacion\UserInscripcionController@parametros');
                 Route::post('DatoUsuarioEstudianteCarrera/{cedula}', 'Titulacion\UserInscripcionController@parametrosestudianteCarrera');
                 Route::post('DatosTrabajoTitulacion/{carrera}', 'Titulacion\UserInscripcionController@DatosTrabajoTitulacion');
-
+               Route::post('AreaInvestigacionCarrera/{carrera}', 'Titulacion\UserInscripcionController@AreaInvestigacionCarrera');
+                
 
                 Route::get('tesis-data', 'Titulacion\UserInscripcionController@datatables');
 
