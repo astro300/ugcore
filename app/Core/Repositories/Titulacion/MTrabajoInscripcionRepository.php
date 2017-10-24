@@ -29,15 +29,6 @@ class MTrabajoInscripcionRepository
 
     public function forSave(Request $request, $flagAll = false)
     {
-       /* $request->cod_tesis = DB::connection('sqlsrv_bdacademico')
-                    ->table('TB_FACULTAD AS F')
-                    ->join('TB_CARRERA AS C', 'F.COD_FACULTAD', '=', 'C.COD_FACULTAD')
-                    ->where('F.COD_FACULTAD', '<', '26')
-                    ->where('C.NOACADE', '=', 0)
-                    ->where('C.ESTADO_CARRERA', '=', 'A')
-                    ->where('C.COD_CCARRERA', '=', 1)
-                    ->select('F.COD_FACULTAD AS COD_FACULTAD',
-                        DB::raw('LTRIM(RTRIM(C.COD_CARRERA)) AS COD_CARRERA'))->get();*/
         $request->fecha_presento=$fecha_presento=Utils::getDateSQL();
         $request->estado=$estado='I';
         $request->fecha_apronega=$fecha_apronega=null;
@@ -48,10 +39,10 @@ class MTrabajoInscripcionRepository
         $request->fecsys1=$fecsys1=Utils::getDateSQL();
         $request->fecsys2=$fecsys2=null;
 
-        //dd($request);
          try {
-            $variable=DB::connection('sqlsrv_bdacademico')->select("exec SP_INGRESO_TESIS ?,?,?,?,?,?,?,?,?,?,?,?,?",
-                [$request->carrera,
+            $respuesta = DB::connection('sqlsrv_bdacademico')->SELECT("exec SP_INGRESO_TESIS ?,?,?,?,?,?,?,?,?,?,?,?,?,?",
+                [NULL,
+                 $request->carrera,
                  $request->tema,
                  $request->estado,
                  $request->fecha_presento,
@@ -64,61 +55,7 @@ class MTrabajoInscripcionRepository
                  $request->fecsys2,
                  $request->ciclo,
                  $request->area_investigacion]);
-            dd($variable);
-         /*   foreach ($variable as $item) {
-                
 
-            }
-            if ($flagAll) {
-                $matrixz = DB::connection('sqlsrv_bdacademico')
-                    ->table('TB_FACULTAD AS F')
-                    ->join('TB_CARRERA AS C', 'F.COD_FACULTAD', '=', 'C.COD_FACULTAD')
-                    ->where('F.COD_FACULTAD', '<', '26')
-                    ->where('C.NOACADE', '=', 0)
-                    ->where('C.ESTADO_CARRERA', '=', 'A')
-                    ->where('C.COD_CCARRERA', '=', 1)
-                    ->select('F.COD_FACULTAD AS COD_FACULTAD',
-                        DB::raw('LTRIM(RTRIM(C.COD_CARRERA)) AS COD_CARRERA'))->get();
-
-
-                $arrayMTDATOS = [];
-                foreach ($matrixz as $item) {
-                    $objMTDatos =
-                        ['COD_TIPO_PARAMETRO' => $request->etapa,
-                            'COD_PLECTIVO' => $request->ciclo,
-                            'FECHA_INICIO' => $request->fecha_inicio,
-                            'FECHA_FIN' => $request->fecha_final,
-                            'ESTADO' => '1',
-                            'TIPO' => $request->tipo,
-                            'COD_FACULTAD' => $item->COD_FACULTAD,
-                            'COD_CARRERA' => $item->COD_CARRERA,
-                            'USUARIO_INGRESO' => currentUser()->id,
-                            'USUARIO_ACTUALIZA' => currentUser()->id,
-                            'created_at' => Utils::getDateSQL(),
-                            'updated_at' => Utils::getDateSQL()];
-
-                    $arrayMTDATOS[] = $objMTDatos;
-                }
-
-                $arrayMTDATOS = array_chunk($arrayMTDATOS, 40);
-
-                foreach ($arrayMTDATOS as $lote) {
-                    MTDatos::insert($lote);
-                }
-            } else {
-                MTDatos::insert([['COD_TIPO_PARAMETRO' => $request->etapa,
-                    'COD_PLECTIVO' => $request->ciclo,
-                    'FECHA_INICIO' => $request->fecha_inicio,
-                    'FECHA_FIN' => $request->fecha_final,
-                    'ESTADO' => '1',
-                    'TIPO' => $request->tipo,
-                    'COD_FACULTAD' => $request->facultad,
-                    'COD_CARRERA' => $request->carrera,
-                    'USUARIO_INGRESO' => currentUser()->id,
-                    'USUARIO_ACTUALIZA' => currentUser()->id,
-                    'created_at' => Utils::getDateSQL(),
-                    'updated_at' => Utils::getDateSQL()]]);
-            }*/
         } catch (\Exception $ex) {
             throw new \Exception($ex);
         }
