@@ -87,7 +87,7 @@ function changeDatatable(id)
                             return  "<label class='btn btn-info btn-sm' data-toggle='modal' " +
                                 "data-target='#ModalNotasComplexivo' data-popup='tooltip' " +
                                 "data-placement='bottom' data-original-title='Editar' onclick='" +
-                                "ModalEdit("+row.COD_ESTUDIANTE+", \""+row.ESTUDIANTE+"\","+row.NOTA_COMPLEXIVO+", "+row.NOTA_GRACIA+",\""+row.OBSERVACION+"\", \""+row.NUM_SECUENCIAXX+"\")'>" +
+                                "ModalEdit("+row.N_ID+", \""+row.ESTUDIANTE+"\","+row.NOTA_COMPLEXIVO+", "+row.NOTA_GRACIA+",\""+row.OBSERVACION+"\", \""+row.NUM_SECUENCIAXX+"\")'>" +
                                 "<i class='fa fa-edit'></i></label>";
                         }
                     }

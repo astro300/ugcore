@@ -27,53 +27,48 @@ class ECExamenComplexivoRepository
 
     public function forSaveOrUpdate(Request $request, $id,$num_secuncia)
     {
-
         $array_sec = [];
         $sec1 = 0;
         $sec2 = 0;
+        $nsec = 0;
+        $array_response = [];
+        $array_response['status'] = 200;
+        $array_response['message'] = 'Operación realizada con éxito';
 
-
-        if($num_secuncia != null && $num_secuncia != '')
+        if($num_secuncia != null && $num_secuncia != '' && $num_secuncia != 'null')
         {
             $num_secuncia = substr($num_secuncia, 0,-1);
             $array_sec = preg_split("/,/", $num_secuncia);
-
+            $nsec = count( $array_sec);
         }
-        $nsec = count( $array_sec);
+
         if($nsec > 1){
             $sec1 = $array_sec[0];
             $sec2 = $array_sec[1];
         }
         else{
-            if($nsec = 1 ){
+            if($nsec == 1 ){
                 $sec1 = $array_sec[0];
             }
         }
+        $matricula = Matricula::find($id);
+        
 
+        $Resp = DB::connection('sqlsrv_bdacademico')
+                ->select('EXEC SP_NOTAS_TIT_COMPLEXIVO_INSERTORUPDATE ?,?,?,?,?,?,?'
+                    , [$matricula->NUM_IDENTIFICACION
+                    , $matricula->COD_CARRERA
+                    , $matricula->COD_PLECTIVO
+                    , $request->NOTA_COMPLEXIVO
+                    , $request->NOTA_GRACIA
+                    , $sec1
+                    , $sec2]);
 
-        $matricula = Matricula::find($id)->first();
-
-        if($matricula != null)
-        {
-            $cod_estudiante = $matricula->NUM_IDENTIFICACION;
-
-            DB::connection('sqlsrv_bdacademico')
-                ->table('BdAcademico.dbo.TB_EXAMEN_GRACIA as ex')
-                ->join('BdAcademico.dbo.TB_ESTUDIANTE_DPERSONAL as e','ex.COD_ESTUDIANTE','=','e.COD_ESTUDIANTE')
-                ->join('BdAcademico.dbo.TB_CARRERA as c','ex.COD_CARRERA','=','c.COD_CARRERA')
-                ->join('BdAcademico.dbo.TB_PLECTIVO as p','ex.COD_PLECTIVO','=','p.COD_PLECTIVO')
-                ->join('BdAcademico.dbo.COD_MATERIA as m','ex.COD_MATERIA','=','m.COD_MATERIA')
-                ->select('ex.NUM_SECUENCIA')
-                ->where(['c.COD_CARRERA','=',$matricula->COD_CARRERA],['p.COD_PLECTIVO','=',$matricula->COD_PLECTIVO],null);
-
-
+        if($Resp[0]->RESULT != 0){
+            $array_response['status']=404;
+            $array_response['message']='No hay datos para registrar';
         }
-        else
-        {
-//            $this->forupdate($request, $complexivo->N_ID);
-        }
-
-        DB::table('users')->insert(['email' => 'john@example.com', 'votes' => 0]);
+        return $array_response;
 
     }
 
