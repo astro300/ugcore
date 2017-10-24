@@ -31,24 +31,15 @@ class UserInscripcionController extends Controller
 
     }
 
+    public function edit($id)
+    {
+        dd($id);
+
+        $objSelect=new SelectController();
+    }
+
     public function store(request $request)
     {
-
-    /*
-        $this->validate($request,['modulo'=>'required|numeric','etapa'=>'required',            'ciclo'=>'required','fecha_inicio'=>'date','fecha_final'=>'date|date_after_or_equal:fecha_inicio']);
-
-        try{
-            $this->datosRPY->forSave($request,$request->todas_facultades=='1'?true:false);
-            Messages::infoRegisterCustom('GUARDADO EXISTOSO');
-        }catch (\Exception $ex){
-            Messages::errorRegisterCustom('Error :'.$ex->getMessage());
-
-        }
-
-        return redirect()->route('titulacion.configuraciones.index');
-
-
-    */
 
 
         $this->validate($request,['tema'=>'required','facultad'=>'required','carrera'=>'required','ciclo'=>'required']);
