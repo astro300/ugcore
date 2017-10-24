@@ -105,6 +105,27 @@ $(function () {
             }
         })
         }
+
+           $("#area_investigacion").html('');
+        if(this.value!=''){
+
+
+        var objApiRest = new AJAXRest('/titulacion/trabajo/AreaInvestigacionCarrera/'+this.value, {}, 'POST');
+        objApiRest.extractDataAjax(function (_resultContent, status) {
+            if (status == 200) {
+
+                  $("#area_investigacion").append("<option value='' selected='selected'> * SELECCIONE EL ÁREA DE INVESTIGACIÓN *</option>");
+
+                $.each(_resultContent.data,function(_key, _value){
+                    $("#area_investigacion").append("<option value='"+_value.N_ID+"'>"+_value.DESCRIPCION+"</option>")
+                });
+            }else{
+                alertToast(_resultContent.message,3000);
+            }
+        })
+        }
+
+
     });
 
      $("#modulo").on('change', function () {

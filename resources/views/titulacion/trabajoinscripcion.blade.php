@@ -81,7 +81,7 @@
 
                                  {!! Field::select('trabajo_titulacion',[],null,['class'=>'select2','label'=>'NOMBRE DEL TRABAJO DE TITULACION:','empty'=>'-SELECCIONE-']) !!}
 
-                                  {!! Field::select('TipoDocente',[],null,['class'=>'select2','label'=>'TIPO DE DOCENTE:','empty'=>'-SELECCIONE-']) !!}
+                                  {!! Field::select('TipoDocente',$tipo_docente,null,['class'=>'select2','label'=>'TIPO DE DOCENTE:','empty'=>'-SELECCIONE-']) !!}
 
 
                             </div>

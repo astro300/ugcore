@@ -24,10 +24,10 @@ class UserInscripcionController extends Controller
     {
     	$objSelect=new SelectController();
         $faculties=$objSelect->getfaculty();
-        $tipo_docente=$objSelect->getTutorCategoria();
-        $area_investigacion=$objSelect->getAreaCarrera();
+        $tipo_docente=$objSelect->getTutorCategoria($type='http');
+        
 
-    	return view('titulacion.trabajoinscripcion')->with(['area_investigacion'=>$area_investigacion,'tipo_docente'=>$tipo_docente,'faculties'=>$faculties]);
+    	return view('titulacion.trabajoinscripcion')->with(['tipo_docente'=>$tipo_docente,'faculties'=>$faculties]);
 
     }
 
@@ -89,6 +89,12 @@ class UserInscripcionController extends Controller
             $objSelect=new SelectController();
         return $objSelect->SearchPersonTesis_Titulacion($carrera,'json');
 
+        }
+        public function AreaInvestigacionCarrera($carrera)
+        {
+
+            $objSelect=new SelectController();
+            return $area_investigacion=$objSelect->getAreaCarrera($carrera,'json');
         }
        
 

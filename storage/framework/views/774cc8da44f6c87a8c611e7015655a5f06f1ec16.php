@@ -91,7 +91,7 @@
                                  <?php echo Field::select('trabajo_titulacion',[],null,['class'=>'select2','label'=>'NOMBRE DEL TRABAJO DE TITULACION:','empty'=>'-SELECCIONE-']); ?>
 
 
-                                  <?php echo Field::select('TipoDocente',[],null,['class'=>'select2','label'=>'TIPO DE DOCENTE:','empty'=>'-SELECCIONE-']); ?>
+                                  <?php echo Field::select('TipoDocente',$tipo_docente,null,['class'=>'select2','label'=>'TIPO DE DOCENTE:','empty'=>'-SELECCIONE-']); ?>
 
 
 
