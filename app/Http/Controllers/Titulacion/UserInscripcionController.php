@@ -42,7 +42,7 @@ class UserInscripcionController extends Controller
     {
 
 
-        $this->validate($request,['tema'=>'required','facultad'=>'required','carrera'=>'required','ciclo'=>'required']);
+        $this->validate($request,['tema'=>'required','facultad'=>'required','carrera'=>'required','ciclo'=>'required','area_investigacion'=>'required']);
         try{
             $this->datosRPY->forSave($request);
             Messages::infoRegisterCustom('GUARDADO EXISTOSO');
