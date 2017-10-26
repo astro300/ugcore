@@ -10,20 +10,17 @@
 namespace UGCore\Core\Respositories\Titulacion;
 
 use Illuminate\Http\Request;
-use UGCore\Core\Entities\Titulacion\MTInscripcion;
-
-
+use UGCore\Core\Entities\Titulacion\MTDocente;
 use Storage;
-//use File;
 use Yajra\Datatables\Datatables;
 use DB;
 use Utils;
 
-class MTrabajoInscripcionRepository
+class MTDocenteInscripcionRepository
 {
     public function getData()
     {
-        return MTInscripcion::all();
+        return MTDocente::all();
     }
 
     public function forSave(Request $request, $flagAll = false)
@@ -66,26 +63,30 @@ class MTrabajoInscripcionRepository
         }
     }
 
-    public function forUpdate(Request $request, MTDatos $datos)
-    {
-    }
-
-    public function forDelete($id)
-    {
-    }
-
     public function datatablesDatos()
     {
         return Datatables
-            ::of(MTInscripcion::orderBy('TB_TESIS.FECHA_PRESENTO', 'DESC')
-                ->join('BdAcademico.dbo.TB_CARRERA as TB_CARRERA',   'TB_CARRERA.COD_CARRERA',   '=', 'TB_TESIS.COD_CARRERA')
-                ->join('BdAcademico.dbo.TB_FACULTAD as TB_FACULTAD', 'TB_FACULTAD.COD_FACULTAD', '=', 'TB_CARRERA.COD_FACULTAD')
-                ->where('TB_TESIS.ESTADO','=','I')
-                ->select('TB_TESIS.COD_TESIS', 'TB_TESIS.TEMA as tema','TB_FACULTAD.NOMBRE as facultad','TB_CARRERA.NOMBRE as carrera','TB_TESIS.FECHA_PRESENTO as fecha')
+            ::of(MTDocente::orderBy('TE.FECHA_PRESENTO', 'DESC')
+
+                ->join('BdAcademico.dbo.TB_CARRERA               as CA', 'CA.COD_CARRERA',  '=', 'TB_TESIS_TUTORES.COD_CARRERA')
+                ->join('BdAcademico.dbo.TB_TESIS                 as TE', 'TE.COD_TESIS',    '=', 'TB_TESIS_TUTORES.COD_TESIS')
+                ->join('BdAcademico.dbo.TB_TESIS_TUTOR_CATEGORIA as TC', 'TC.N_ID',         '=', 'TB_TESIS_TUTORES.TIPO_DOCENTE')
+                ->join('BdAcademico.dbo.TB_PLECTIVO              as PL', 'PL.COD_PLECTIVO', '=', 'TB_TESIS_TUTORES.COD_PLECTIVO')
+                ->join('BdAcademico.dbo.TB_DOCENTE_DPERSONAL     as DP', 'DP.COD_DOCENTE',  '=', 'TB_TESIS_TUTORES.COD_DOCENTE')
+
+                ->where('TB_TESIS_TUTORES.ESTADO','=','A')
+
+                ->select('CA.NOMBRE      as carrera')
+                ->select('TE.TEMA        as trabajo')
+                ->select('TE.COD_TESIS   as cod_tesis')
+                ->select('TC.DESCRIPCION as tipo_docente')
+                ->select('PL.DESCRIPCION as plectivo')
+                ->select(DB::raw("DP.APELLIDO +' '+ DP.NOMBRE AS docente"))
+
                 ->get())
-            ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $COD_TESIS) }}" 
+            ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $cod_tesis) }}" 
                                        class="btn btn-primary btn-xs">&nbsp;Editar</a>|
-                                    <a href="{{ route(\'titulacion.configuracion.delete\', $COD_TESIS) }}" 
+                                    <a href="{{ route(\'titulacion.configuracion.delete\', $cod_tesis) }}" 
                                        onclick="return confirm(\'¿Está Seguro que desea eliminar este registro?\')"
                                        class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
                                        aria-hidden="true">&nbsp;Eliminar</a>')
