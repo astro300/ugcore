@@ -5,9 +5,10 @@
 
 $(function () {
 
- $('#cedula_estudiante').on('keydown', function (e) {
-    if (e.which === 9) {
-
+ $('#cedula_estudiante').on('keydown', function (e)
+ {
+    if (e.which === 9)
+    {
         $("#nombre_estudiante").html('');
         if(this.value!=''){
 
@@ -213,31 +214,43 @@ $.fn.dataTable.ext.errMode = 'throw';
     }).ajax.reload();
 
      $.fn.dataTable.ext.errMode = 'throw';
-    $('#TrabajoInscripcion').DataTable({
-        responsive: true, "oLanguage": {
-            "sUrl": "/js/config/datatablespanish.json"
-        },
-        "lengthMenu": [5 ,10, 25, 50, 75, 100 ],
-        "aoColumnDefs": [],
-        "processing": true,
-        "serverSide": true,
-        "deferRender": true,
-        "destroy": true,
-        "ajax": '/titulacion/trabajo/tesis-data/',
-        "columns": [
-
-
-           {data: 'tema'},
-             {data: 'facultad'},
-            {data: 'carrera'},
-            {data: 'fecha'},
-
-      
-
-             {data: 'acciones', "bSortable": false, "searchable": false, "targets": 0,
-                "render":function(data, type, row ){
-                    return   $('<div />').html(row.actions).text();
-                }}
+    $('#TrabajoInscripcion').DataTable(
+        {
+            responsive: true, "oLanguage":
+            {
+                "sUrl": "/js/config/datatablespanish.json"
+            },
+            "lengthMenu": [5 ,10, 25, 50, 75, 100 ],
+            "aoColumnDefs": [],
+            "processing": true,
+            "serverSide": true,
+            "deferRender": true,
+            "destroy": true,
+            "ajax": '/titulacion/trabajo/tesis-data/',
+            "columns":
+                [
+                    {
+                        data: 'tema'
+                    },
+                    {
+                        data: 'facultad'
+                    },
+                    {
+                        data: 'carrera'
+                    },
+                    {
+                        data: 'fecha'
+                    },
+                    {
+                        data: 'acciones',
+                        "bSortable": false,
+                        "searchable": false,
+                        "targets": 0,
+                        "render": function(data, type, row )
+                        {
+                            return   $('<div />').html(row.actions).text();
+                        }
+                    }
         ],
         "order": []
     }).ajax.reload();

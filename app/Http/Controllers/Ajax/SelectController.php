@@ -369,33 +369,90 @@ public function getAreaCarrera($carrera,$type='json')
             ->orderBy('C.DESCRIPCION', 'ASC')
             ->select('C.N_ID AS N_ID','C.DESCRIPCION AS DESCRIPCION')
             ;
-        if($type=='json'){
+        if($type=='json')
+        {
             $result=$result->get('DESCRIPCION', 'N_ID');
             $listaCarreras['data']=$result;
             return response()->json($listaCarreras, 200);
-        }else{
+        }
+        else
+        {
             $result=$result->pluck('DESCRIPCION', 'N_ID')->toArray();
-           return $result;
+            return $result;
         }
 }
     public function getTutorCategoria($type='json')
     {
-    $result = DB::connection('sqlsrv_bdacademico')
-            ->table('TB_TESIS_TUTOR_CATEGORIA AS C')
-            ->where('C.ESTADO','=','A')          
-            ->groupBy('C.N_ID', 'C.DESCRIPCION')
-            ->orderBy('C.DESCRIPCION', 'ASC')
-            ->select('C.N_ID AS N_ID','C.DESCRIPCION AS DESCRIPCION')
-            ;
-        if($type=='json'){
-            $result=$result->get('DESCRIPCION', 'N_ID');
-            $listaCarreras['data']=$result;
-            return response()->json($listaCarreras, 200);
-        }else{
-            $result=$result->pluck('DESCRIPCION', 'N_ID')->toArray();
-           return $result;
-        }
+        $result = DB::connection('sqlsrv_bdacademico')
+                  ->table('TB_TESIS_TUTOR_CATEGORIA AS C')
+                  ->where('C.ESTADO','=','A')
+                  ->groupBy('C.N_ID', 'C.DESCRIPCION')
+                  ->orderBy('C.DESCRIPCION', 'ASC')
+                  ->select('C.N_ID AS N_ID','C.DESCRIPCION AS DESCRIPCION');
 
+        if($type=='json')
+        {
+            $result                = $result->get('DESCRIPCION', 'N_ID');
+            $listaCarreras['data'] = $result;
+            return response()->json($listaCarreras, 200);
+        }
+        else
+        {
+            $result = $result->pluck('DESCRIPCION', 'N_ID')->toArray();
+            return $result;
+        }
+    }
+
+    public function searchDocenteTitulacion($cedula, $type = 'json')
+    {
+        $objResult = DB::connection('sqlsrv_bdacademico')
+            ->table('TB_HORARIO_ACTIVIDADES_DOCENTES        AS HA')
+            ->join('BdAcademico.dbo.TB_ACTIVIDADES_DOCENTES AS AD','AD.ID_ACTIVIDAD_DCTE', '=', 'HA.ID_ACTIVIDAD_DCTE')
+            ->join('BdAcademico.dbo.TB_CARRERA              AS CA','CA.COD_CARRERA',       '=', 'HA.COD_CARRERA')
+            ->join('BdAcademico.dbo.TB_DOCENTE_DPERSONAL    AS DP','DP.COD_DOCENTE',       '=', 'HA.COD_DOCENTE')
+
+            ->where('AD.ACTIVIDADES', '=', 'HORAS TUTORIAS DE TITULACION')
+            ->where('HA.HABILITADO',  '=', 1)
+            ->where('DP.COD_DOCENTE', '=', $cedula)
+
+            ->groupBy('DP.COD_DOCENTE', 'DP.APELLIDO', 'DP.NOMBRE')
+
+            ->select('DP.COD_DOCENTE AS COD_DOCENTE')
+            ->select(DB::raw("DP.APELLIDO +' '+ DP.NOMBRE AS DOCENTE"));
+
+        if($type === 'json')
+        {
+            return response()->json(['data' => $objResult->get('COD_DOCENTE','DOCENTE')], 200);
+        }
+        else
+        {
+            return $objResult->pluck('COD_DOCENTE','DOCENTE')->toArray();
+        }
+    }
+
+    public function searchDocenteCarreraTitulacion($cedula, $type = 'json')
+    {
+        $objResult = DB::connection('sqlsrv_bdacademico')
+            ->table('TB_HORARIO_ACTIVIDADES_DOCENTES        AS HA')
+            ->join('BdAcademico.dbo.TB_ACTIVIDADES_DOCENTES AS AD','AD.ID_ACTIVIDAD_DCTE', '=', 'HA.ID_ACTIVIDAD_DCTE')
+            ->join('BdAcademico.dbo.TB_CARRERA              AS CA','CA.COD_CARRERA',       '=', 'HA.COD_CARRERA')
+            ->join('BdAcademico.dbo.TB_DOCENTE_DPERSONAL    AS DP','DP.COD_DOCENTE',       '=', 'HA.COD_DOCENTE')
+
+            ->where('AD.ACTIVIDADES', '=', 'HORAS TUTORIAS DE TITULACION')
+            ->where('HA.HABILITADO',  '=', 1)
+            ->where('DP.COD_DOCENTE', '=', $cedula)
+
+            ->select('CA.COD_CARRERA AS COD_CARRERA')
+            ->select('CA.NOMBRE      AS CARRERA');
+
+        if($type === 'json')
+        {
+            return response()->json(['data' => $objResult->get('COD_DOCENTE','DOCENTE')], 200);
+        }
+        else
+        {
+            return $objResult->pluck('COD_DOCENTE','DOCENTE')->toArray();
+        }
     }
 
 }
