@@ -19,7 +19,7 @@ use Yajra\Datatables\Datatables;
 use DB;
 use Utils;
 
-class MTrabajoInscripcionRepository
+class MTEstudianteInscripcionRepository
 {
     public function getData()
     {
@@ -77,19 +77,16 @@ class MTrabajoInscripcionRepository
 
     public function datatablesDatos()
     {
-        return Datatables
-            ::of(MTInscripcion::orderBy('TB_TESIS.FECHA_PRESENTO', 'DESC')
+        return Datatables::of(MTInscripcion::orderBy('TB_TESIS.FECHA_PRESENTO', 'DESC')
                 ->join('BdAcademico.dbo.TB_CARRERA as TB_CARRERA', 'TB_CARRERA.COD_CARRERA', '=', 'TB_TESIS.COD_CARRERA')
                 ->join('BdAcademico.dbo.TB_FACULTAD as TB_FACULTAD', 'TB_FACULTAD.COD_FACULTAD', '=', 'TB_CARRERA.COD_FACULTAD')
                 ->where('TB_TESIS.ESTADO','=','I')
-                ->select('TB_TESIS.COD_TESIS', 'TB_TESIS.TEMA as tema','TB_FACULTAD.NOMBRE as facultad','TB_CARRERA.NOMBRE as carrera','TB_TESIS.FECHA_PRESENTO as fecha')
-                ->get())
-            ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $COD_TESIS) }}" 
-                                       class="btn btn-primary btn-xs">&nbsp;Editar</a>|
-                                    <a href="{{ route(\'titulacion.configuracion.delete\', $COD_TESIS) }}" 
-                                       onclick="return confirm(\'¿Está Seguro que desea eliminar este registro?\')"
-                                       class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
-                                       aria-hidden="true">&nbsp;Eliminar</a>')
+                ->select('TB_TESIS.COD_TESIS', 'TB_TESIS.TEMA as tema','TB_FACULTAD.NOMBRE as facultad','TB_CARRERA.NOMBRE as carrera','TB_TESIS.FECHA_PRESENTO as fecha')->get()
+        )
+            ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $COD_TESIS) }}" class="btn btn-primary btn-xs">&nbsp;Editar</a>|<a href="{{ route(\'titulacion.configuracion.delete\', $COD_TESIS) }}" onclick="
+return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
+    class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
+        aria-hidden="true">&nbsp;Eliminar</a>')
             ->make(true);
     }
 }
