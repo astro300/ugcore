@@ -54,7 +54,7 @@ $(function () {
         var objApiRest = new AJAXRest('/titulacion/trabajo/DatosTrabajoTitulacion/'+this.value, {}, 'POST');
         objApiRest.extractDataAjax(function (_resultContent, status) {
             if (status == 200) {
-                   $("#tesis").append("<option value='' selected='selected'> * SELECCIONE LA CARRERA *</option>");
+                   $("#tesis").append("<option value='' selected='selected'> * SELECCIONE TRABAJO DE TITULACION *</option>");
                 $.each(_resultContent.data,function(_key, _value){
                     $("#tesis").append("<option value='"+_value.COD_TESIS+"'>"+_value.TEMA+"</option>")
                 });
@@ -147,7 +147,38 @@ $(function () {
         }
     });
 
-  
+
+$.fn.dataTable.ext.errMode = 'throw';
+    $('#datosUsuariosSeguimiento').DataTable({
+        responsive: true, "oLanguage": {
+            "sUrl": "/js/config/datatablespanish.json"
+        },
+        "lengthMenu": [5 ,10, 25, 50, 75, 100 ],
+        "aoColumnDefs": [],
+        "processing": true,
+        "serverSide": true,
+        "deferRender": true,
+        "destroy": true,
+        "ajax": '/titulacion/Tutorias-data/',
+        "columns": [
+
+
+            
+             {data: 'carrera'},
+             {data: 'tesis_tutor'},
+            
+            {data: 'cod_estudiante'},
+            {data: 'fecha_reg'},
+      
+    
+
+             {data: 'acciones', "bSortable": false, "searchable": false, "targets": 0,
+                "render":function(data, type, row ){
+                    return   $('<div />').html(row.actions).text();
+                }}
+        ],
+        "order": []
+    }).ajax.reload();
 
   $.fn.dataTable.ext.errMode = 'throw';
     $('#datosUsuarios').DataTable({

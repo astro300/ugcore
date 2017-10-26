@@ -31,6 +31,7 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function () {
         });
 
         Route::group(['middleware' => ['titulacion_date_enabled:TUTORIAS']], function () {
+            Route::get('Tutorias-data', 'Titulacion\TutoriaController@datatables');
             Route::get('Tutorias', 'Titulacion\TutoriaController@index')->name('tutorias.index');
             Route::post('TutoriasStore', 'Titulacion\TutoriaController@store')->name('tutorias.store');
         });
