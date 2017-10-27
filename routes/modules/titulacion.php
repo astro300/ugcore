@@ -65,6 +65,9 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION']], function ()
                 Route::post('DocenteStore',                 'Titulacion\DocenteInscripcionController@store')->name('docente.store');
 
                 Route::post('EstudianteStore',   'Titulacion\EstudianteInscripcionController@store')->name('estudiante.store');
+                Route::get('NotasTitulacion', 'Titulacion\TitulacionController@getNotasTitulacion');
+                Route::get('notas-titulacion', 'Titulacion\TitulacionController@getDataNotasTitulacion');
+                Route::post('StoreNota/{idestudiante}/{idtesis}', 'Titulacion\TitulacionController@SaveNotaTitulacion');
             });
 
 

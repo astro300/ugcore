@@ -155,8 +155,6 @@ function GuardarNotas() {
             alertToast(_resultContent.message, 3500);
         }
     });
-
-
 }
 
 $('#dtExamenComplexivo').on( 'click', 'tbody td:not(:first-child)', function (e) {

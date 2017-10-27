@@ -168,9 +168,9 @@ class MTTitulacionRepository
 
         )
             ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $N_ID) }}" class="btn btn-primary btn-xs">&nbsp;Editar</a>|<a href="{{ route(\'titulacion.configuracion.delete\', $N_ID) }}" onclick="
-return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
-    class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
-        aria-hidden="true">&nbsp;Eliminar</a>')
+            return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
+            class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
+            aria-hidden="true">&nbsp;Eliminar</a>')
             ->make(true);
 
         //var_dump($results);
@@ -185,5 +185,26 @@ return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
                     ->add_column('actions', ' <a href=""><span class="fa fa-pencil"></span>&nbsp;Editar</a>')->make(true);
 
                // ->add_column('actions', ' <a href=""><span class="fa fa-pencil"></span>&nbsp;Editar</a>')->make(true);*/
+    }
+
+
+    public function getDataNotasTitulacion()
+    {
+        return Datatables::of(
+            DB::connection('sqlsrv_bdacademico')
+                ->table('dbo.TB_ESTUDIANTE_TESIS AS ET')
+                ->join('dbo.TB_TIT_MATRICULA AS M', 'ET.COD_ESTUDIANTE', '=', 'M.NUM_IDENTIFICACION')
+                ->join('dbo.TB_TESIS AS T', 'ET.COD_TESIS', '=', 'T.COD_TESIS')
+                ->join('dbo.TB_ESTUDIANTE_DPERSONAL AS E', 'M.NUM_IDENTIFICACION', '=', 'E.COD_ESTUDIANTE')
+                ->where('M.TIPO_MODALIDAD','=',1)
+                ->select('ET.COD_TESIS','ET.COD_ESTUDIANTE','T.TEMA',
+                    DB::raw("E.APELLIDO+' '+E.NOMBRE AS ESTUDIANTE"),'ET.NOTA_T AS NOTA'
+                    )->get()
+            )->make(true);
+    }
+
+    public  function  forsaveNotaTitulacion(Request $request)
+    {
+
     }
 }
