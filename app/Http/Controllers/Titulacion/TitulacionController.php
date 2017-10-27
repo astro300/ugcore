@@ -5,6 +5,8 @@ namespace UGCore\Http\Controllers\Titulacion;
 use Illuminate\Http\Request;
 use UGCore\Http\Controllers\Ajax\SelectController;
 use UGCore\Http\Controllers\Controller;
+use UGCore\Core\Respositories\Titulacion\MTTitulacionRepository;
+use Validator;
 
 
 class TitulacionController extends Controller
@@ -85,5 +87,31 @@ class TitulacionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public  function getNotasTitulacion()
+    {
+        return view('titulacion.ingreso_notas_titulacion');
+    }
+    public function getDataNotasTitulacion()
+    {
+        $objRPY = new MTTitulacionRepository();
+        return $objRPY ->getDataNotasTitulacion();
+    }
+
+    public function SaveNotaTitulacion(Request $request, $idestudiante, $idtesis){
+        $rules = array(
+            'NOTA' => 'required|numeric|max:10',
+            'COD_ESTUDIANTE' =>'required|numeric',
+            'COD_TESIS' =>'required|numeric'
+        );
+        $this-> validate($request, $rules);
+
+        //$x = $request->NOTA.' '.$idestudiante.' '.$idtesis;
+        $objRPY = new MTTitulacionRepository();
+
+        $response =  $objRPY->forsaveNotaTitulacion($request);
+        return response()->json($response, 200);
     }
 }
