@@ -100,7 +100,8 @@ class TitulacionController extends Controller
         return $objRPY ->getDataNotasTitulacion();
     }
 
-    public function SaveNotaTitulacion(Request $request, $idestudiante, $idtesis){
+    public function SaveNotaTitulacion(Request $request, $idestudiante, $idtesis)
+    {
         $rules = array(
             'NOTA' => 'required|numeric|max:10',
             'COD_ESTUDIANTE' =>'required|numeric',

@@ -18,6 +18,7 @@
 
                 <th>Trabajo</th>
                 <th>Estudiante</th>
+                <th>Cargo</th>
                 <th>Nota</th>
                 <th>Actions</th>
 

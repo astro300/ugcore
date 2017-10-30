@@ -17,6 +17,9 @@ use Yajra\Datatables\Datatables;
 use DB;
 use Utils;
 
+use UGCore\Core\Entities\Titulacion\MTEstudianteTesis ;
+use UGCore\Core\Entities\Titulacion\MTDocente;
+
 class MTTitulacionRepository
 {
     public function getData()
@@ -190,21 +193,71 @@ class MTTitulacionRepository
 
     public function getDataNotasTitulacion()
     {
+        $ced_usuario = currentUser()->name;
+
         return Datatables::of(
             DB::connection('sqlsrv_bdacademico')
                 ->table('dbo.TB_ESTUDIANTE_TESIS AS ET')
                 ->join('dbo.TB_TIT_MATRICULA AS M', 'ET.COD_ESTUDIANTE', '=', 'M.NUM_IDENTIFICACION')
                 ->join('dbo.TB_TESIS AS T', 'ET.COD_TESIS', '=', 'T.COD_TESIS')
+                ->join('dbo.TB_TESIS_TUTORES AS TT','T.COD_TESIS','=','TT.COD_TESIS')
+                ->join('dbo.TB_TESIS_TUTOR_CATEGORIA AS TC','TT.TIPO_DOCENTE','=','TC.N_ID')
+                ->join('dbo.TB_DOCENTE_DPERSONAL AS DP','TT.COD_DOCENTE','=','DP.COD_DOCENTE')
                 ->join('dbo.TB_ESTUDIANTE_DPERSONAL AS E', 'M.NUM_IDENTIFICACION', '=', 'E.COD_ESTUDIANTE')
-                ->where('M.TIPO_MODALIDAD','=',1)
+                ->where([['M.TIPO_MODALIDAD',1],['TT.COD_DOCENTE', $ced_usuario]])
+                ->whereIn('TC.N_ID', [1, 2])
                 ->select('ET.COD_TESIS','ET.COD_ESTUDIANTE','T.TEMA',
-                    DB::raw("E.APELLIDO+' '+E.NOMBRE AS ESTUDIANTE"),'ET.NOTA_T AS NOTA'
+                    DB::raw("E.APELLIDO+' '+E.NOMBRE AS ESTUDIANTE"),
+                    'TC.DESCRIPCION AS CARGO',
+                    DB::raw("(CASE TT.TIPO_DOCENTE WHEN 1
+                               THEN ET.NOTA_T ELSE ET.NOTA_R END) AS NOTA")
                     )->get()
             )->make(true);
     }
 
     public  function  forsaveNotaTitulacion(Request $request)
     {
+        $ced_usuario = currentUser()->name;
 
+        $array_response = [];
+        $array_response['status'] = 200;
+        $array_response['message'] = 'La nota de titulación se ha guardado con éxito';
+        //dd($request->COD_TESIS.' - '.$request->COD_ESTUDIANTE);
+        $EstudianteTesis = MTEstudianteTesis::where('COD_TESIS', '=', $request->COD_TESIS)
+                                            ->where('COD_ESTUDIANTE', '=', $request->COD_ESTUDIANTE)
+                                            ->first();
+
+        if($EstudianteTesis != null)
+        {
+            $column_nota = '';
+            $DocenteTesis = MTDocente::where([['COD_TESIS',$request->COD_TESIS],['COD_DOCENTE',$ced_usuario]])
+                                        ->first();
+            if($DocenteTesis != null){
+                if( $DocenteTesis->TIPO_DOCENTE == 1){
+                    $column_nota = 'NOTA_T';
+                }
+                else{
+                    $column_nota = 'NOTA_R';
+                }
+
+                $exito = DB::table('BdAcademico.dbo.TB_ESTUDIANTE_TESIS')
+                    ->where([['COD_TESIS', $request->COD_TESIS],['COD_ESTUDIANTE', $request->COD_ESTUDIANTE]])
+                    ->update([$column_nota => $request->NOTA]);
+
+                if($exito < 1){
+                    $array_response['status']=404;
+                    $array_response['message']='No hay datos para registrar';
+                }
+            }
+            else{
+                $array_response['status']=404;
+                $array_response['message']='El Docente no tiene asignado el trabajo de tesis seleccionado';
+            }
+        }
+        else{
+            $array_response['status']=404;
+            $array_response['message']='El estudiante no se encuentra matriculado o no tiene asignado un trabajo de tesis';
+        }
+        return $array_response;
     }
 }
