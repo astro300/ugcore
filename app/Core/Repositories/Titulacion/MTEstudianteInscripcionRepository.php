@@ -83,10 +83,10 @@ class MTEstudianteInscripcionRepository
                 ->where('TB_TESIS.ESTADO','=','I')
                 ->select('TB_TESIS.COD_TESIS', 'TB_TESIS.TEMA as tema','TB_FACULTAD.NOMBRE as facultad','TB_CARRERA.NOMBRE as carrera','TB_TESIS.FECHA_PRESENTO as fecha')->get()
         )
-            ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $COD_TESIS) }}" class="btn btn-primary btn-xs">&nbsp;Editar</a>|<a href="{{ route(\'titulacion.configuracion.delete\', $COD_TESIS) }}" onclick="
+            ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $COD_TESIS) }}" ><i class="fa fa-pencil"></i></a> &nbsp<a href="{{ route(\'titulacion.configuracion.delete\', $COD_TESIS) }}" onclick="
 return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
-    class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
-        aria-hidden="true">&nbsp;Eliminar</a>')
+    ><span class="fa fa-trash text-danger"
+                                       aria-hidden="true"></a>')
             ->make(true);
     }
 }

@@ -15,9 +15,8 @@
             <div class="panel-heading">DATOS</div>
            
             <div class="panel-body">
-                {!! Field::text('nombre',null,['placeholder'=>'Ingrese su cedula','label'=>'INGRESA CEDULA:','maxlength'=>'10',"onkeypress"=>" return verifyKeyPressPattern(event, /[0-9]*/,'#nombre')" ]) !!}
-                {!! Field::select('facultad',$faculties,null,['empty'=>'seleccione','class'=>'select2','label'=>'FACULTAD: '])!!}
-                {!! Field::select('carrera',[],null,['class'=>'select2','label'=>'CARRERA: ']) !!}
+                {!! Field::text('nombre',null,['placeholder'=>'INGRESE NOMBRE DE LA EVIDENCIA','label'=>'NOMBRE DE EVIDENCIA:']) !!}
+                {!! Field::select('tesis',[],null,['empty'=>'seleccione','class'=>'select2','label'=>'TESIS: '])!!}
 
                 {!! Field::file('documentoFoto',['id'=>'documentoFoto','accept'=>"image/*",'label'=>'FOTO']) !!}
             </div>

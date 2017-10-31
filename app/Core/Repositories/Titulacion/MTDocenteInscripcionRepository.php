@@ -85,11 +85,11 @@ class MTDocenteInscripcionRepository
 
                 ->get())
             ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $cod_tesis) }}" 
-                                       class="btn btn-primary btn-xs">&nbsp;Editar</a>|
+                                       ><i class="fa fa-pencil"></i></a> &nbsp
                                     <a href="{{ route(\'titulacion.configuracion.delete\', $cod_tesis) }}" 
                                        onclick="return confirm(\'¿Está Seguro que desea eliminar este registro?\')"
-                                       class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
-                                       aria-hidden="true">&nbsp;Eliminar</a>')
+                                       ><span class="fa fa-trash text-danger"
+                                       aria-hidden="true"></a>')
             ->make(true);
     }
 }
