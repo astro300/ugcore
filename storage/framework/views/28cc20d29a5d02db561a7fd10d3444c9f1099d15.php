@@ -14,11 +14,9 @@
             <div class="panel-heading">DATOS</div>
            
             <div class="panel-body">
-                <?php echo Field::text('nombre',null,['placeholder'=>'Ingrese su cedula','label'=>'INGRESA CEDULA:','maxlength'=>'10',"onkeypress"=>" return verifyKeyPressPattern(event, /[0-9]*/,'#nombre')" ]); ?>
+                <?php echo Field::text('nombre',null,['placeholder'=>'INGRESE NOMBRE DE LA EVIDENCIA','label'=>'NOMBRE DE EVIDENCIA:']); ?>
 
-                <?php echo Field::select('facultad',$faculties,null,['empty'=>'seleccione','class'=>'select2','label'=>'FACULTAD: ']); ?>
-
-                <?php echo Field::select('carrera',[],null,['class'=>'select2','label'=>'CARRERA: ']); ?>
+                <?php echo Field::select('tesis',[],null,['empty'=>'seleccione','class'=>'select2','label'=>'TESIS: ']); ?>
 
 
                 <?php echo Field::file('documentoFoto',['id'=>'documentoFoto','accept'=>"image/*",'label'=>'FOTO']); ?>

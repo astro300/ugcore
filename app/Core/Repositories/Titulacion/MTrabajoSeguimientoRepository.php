@@ -53,19 +53,20 @@ class MTrabajoSeguimientoRepository
                
                ->join('BdAcademico.dbo.TB_TESIS as TB_TESIS','TB_TESIS.COD_TESIS', '=', 'TB_TESIS_CONTROL.COD_TESIS')
                 ->join('BdAcademico.dbo.TB_CARRERA as TB_CARRERA', 'TB_CARRERA.COD_CARRERA', '=', 'TB_TESIS.COD_CARRERA')
-               //->join('BdAcademico.dbo.TB_CARRERA as TB_CARRERA', 'TB_CARRERA.COD_CARRERA', '=', 'TB_TESIS.COD_CARRERA')
-
+               ->join('BdAcademico.dbo.TB_TESIS_TUTORES as TB_TESIS_TUTORES', 'TB_TESIS_TUTORES.N_ID', '=', 'TB_TESIS_CONTROL.TESIS_TUTORES_ID')
+               ->join('BdAcademico.dbo.TB_DOCENTE_DPERSONAL as TB_DOCENTE_DPERSONAL', 'TB_DOCENTE_DPERSONAL.COD_DOCENTE', '=', 'TB_TESIS_TUTORES.COD_DOCENTE')
+               ->join('BdAcademico.dbo.TB_ESTUDIANTE_DPERSONAL as TB_ESTUDIANTE_DPERSONAL', 'TB_ESTUDIANTE_DPERSONAL.COD_ESTUDIANTE', '=', 'TB_TESIS_CONTROL.COD_ESTUDIANTE')
                ->where('TB_TESIS_CONTROL.ESTADO', '=', 'A')
+                
                 ->select('TB_TESIS_CONTROL.N_ID','TB_CARRERA.NOMBRE as carrera',
-                    'TB_TESIS_CONTROL.TESIS_TUTORES_ID as tesis_tutor', 'TB_TESIS_CONTROL.FECHA_REG as fecha_reg',
-                    'TB_TESIS_CONTROL.COD_ESTUDIANTE as cod_estudiante')->get()
+                    DB::raw("TB_DOCENTE_DPERSONAL.APELLIDO +' '+ TB_DOCENTE_DPERSONAL.NOMBRE AS tesis_tutor"), 'TB_TESIS_CONTROL.FECHA_REG as fecha_reg',
+                    DB::raw("TB_ESTUDIANTE_DPERSONAL.APELLIDO +' '+ TB_ESTUDIANTE_DPERSONAL.NOMBRE AS cod_estudiante"))->get()
  
 
         )
-           ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $N_ID) }}" class="btn btn-primary btn-xs">&nbsp;Editar</a>|<a href="{{ route(\'titulacion.configuracion.delete\', $N_ID) }}" onclick="
-return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
-    class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"
-        aria-hidden="true">&nbsp;Eliminar</a>')
+           ->addColumn('actions', '<a href="{{ route(\'titulacion.configuracion.edit\', $N_ID) }}" ><i class="fa fa-pencil"></i></a> &nbsp<a href="{{ route(\'titulacion.configuracion.delete\', $N_ID) }}" onclick="return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
+    ><span class="fa fa-trash text-danger"
+                                       aria-hidden="true"></a>')
             ->make(true);
 
         
