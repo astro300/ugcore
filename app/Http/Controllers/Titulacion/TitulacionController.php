@@ -115,4 +115,32 @@ class TitulacionController extends Controller
         $response =  $objRPY->forsaveNotaTitulacion($request);
         return response()->json($response, 200);
     }
+
+    public function getNotasGeneralTitulacion()
+    {
+        $objSelect=new SelectController();
+        $faculties=$objSelect->getfaculty();
+        return view('titulacion.IngresoGenNotasTitulacion')->with(['faculties'=>$faculties]);
+    }
+
+    public function getDataNotasGenTitulacion($codcarrera)
+    {
+        $objRPY = new MTTitulacionRepository();
+        return $objRPY ->getDataNotasGenTitulacion($codcarrera);
+    }
+
+    public function saveNotasGenTitulacion(Request $request)
+    {
+        $rules = array(
+            'COD_ESTUDIANTE' =>'required|numeric',
+            'COD_TESIS' =>'required|numeric',
+            'NOTAT' => 'sometimes|required|numeric|max:10',
+            'NOTAR' => 'sometimes|required|numeric|max:10',
+            'NOTAS' => 'sometimes|required|numeric|max:10',
+        );
+        $this-> validate($request, $rules);
+        $objRPY = new MTTitulacionRepository();
+        $response =  $objRPY->forSaveNotasGenTitulacion($request);
+        return response()->json($response, 200);
+    }
 }

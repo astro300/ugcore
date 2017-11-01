@@ -68,6 +68,12 @@ Route::group(['middleware' => ['role:SUPMIN|ADMINTITULACION|ACADOCENTE']], funct
                 Route::get('NotasTitulacion', 'Titulacion\TitulacionController@getNotasTitulacion')->name('NotasTitulacion.getNotasTitulacion');
                 Route::get('notas-titulacion', 'Titulacion\TitulacionController@getDataNotasTitulacion');
                 Route::post('StoreNota/{idestudiante}/{idtesis}', 'Titulacion\TitulacionController@SaveNotaTitulacion');
+
+                Route::get('NotasGeneralTitulacion','Titulacion\TitulacionController@getNotasGeneralTitulacion')->name('NotasGeneralTitulacion.getNotasGeneralTitulacion');
+                Route::get('data-notas-titulacion/{codcarrera}', 'Titulacion\TitulacionController@getDataNotasGenTitulacion');
+
+
+                Route::post('StoreNotasGeneral', 'Titulacion\TitulacionController@saveNotasGenTitulacion');
             });
 
 

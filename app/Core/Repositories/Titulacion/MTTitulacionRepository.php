@@ -260,4 +260,80 @@ return confirm(\'¿Esta Seguro que desea eliminar este registro?\')"
         }
         return $array_response;
     }
+
+    // Métodos para notas general de titulación
+
+    public function getDataNotasGenTitulacion($codcarrera)
+    {
+        return Datatables::of(
+            DB::connection('sqlsrv_bdacademico')
+                ->table('dbo.TB_ESTUDIANTE_TESIS AS ET')
+                ->join('dbo.TB_TIT_MATRICULA AS M', 'ET.COD_ESTUDIANTE', '=', 'M.NUM_IDENTIFICACION')
+                ->join('dbo.TB_TESIS AS T', 'ET.COD_TESIS', '=', 'T.COD_TESIS')
+                ->join('dbo.TB_ESTUDIANTE_DPERSONAL AS E', 'M.NUM_IDENTIFICACION', '=', 'E.COD_ESTUDIANTE')
+                ->where([['M.TIPO_MODALIDAD',1],['M.COD_CARRERA', $codcarrera]])
+                ->select('ET.COD_TESIS','ET.COD_ESTUDIANTE','T.TEMA',
+                    DB::raw("E.APELLIDO+' '+E.NOMBRE AS ESTUDIANTE"),
+                    'ET.NOTA_T AS NTUTOR','ET.NOTA_R AS NREVISOR','ET.NOTA AS NSUSTENTACION'
+                    ,DB::raw('FORMAT(
+                                (	 (case  when  ET.NOTA_T is NULL then 0 else  ET.NOTA_T end)
+                                    +(case  when  ET.NOTA_R is NULL then 0 else  ET.NOTA_R end) 
+                                    +(case   when ET.NOTA is  NULL then 0 else  ET.NOTA end)
+                                )/3 , \'N\', \'en-us\') AS NOTA_FINAL')
+                )->get()
+        )->make(true);
+    }
+
+    public function forSaveNotasGenTitulacion(Request $request)
+    {
+       $notas = array();
+
+        if(isset($request->NOTAT))
+        {
+            $notas['NOTA_T'] = $request->NOTAT;
+        }
+
+        if(isset($request->NOTAR))
+        {
+            $notas['NOTA_R'] = $request->NOTAR;
+        }
+
+        if(isset($request->NOTAS))
+        {
+            $notas['NOTA_S'] = $request->NOTAS;
+        }
+
+        //dd($notas);
+
+        //            ['NOTA_T' => ,
+        //            'NOTA_R' => $request->NOTAR,
+        //            'NOTA' => $request->NOTAS    ]
+
+        $array_response = [];
+        $array_response['status'] = 200;
+        $array_response['message'] = 'Las notas de titulación se han guardado con éxito';
+        $EstudianteTesis = MTEstudianteTesis::where('COD_TESIS', '=', $request->COD_TESIS)
+            ->where('COD_ESTUDIANTE', '=', $request->COD_ESTUDIANTE)
+            ->first();
+
+        if($EstudianteTesis != null)
+        {
+            //dd($request->NOTAT);
+            $exito = DB::table('BdAcademico.dbo.TB_ESTUDIANTE_TESIS')
+                ->where([['COD_TESIS', $request->COD_TESIS],['COD_ESTUDIANTE', $request->COD_ESTUDIANTE]])
+                ->update( $notas );
+
+            if($exito < 1){
+                $array_response['status']=404;
+                $array_response['message']='No hay datos para registrar';
+            }
+        }
+        else{
+            $array_response['status']=404;
+            $array_response['message']='El estudiante no se encuentra matriculado o no tiene asignado un trabajo de tesis';
+        }
+
+        return  $array_response;
+    }
+
 }

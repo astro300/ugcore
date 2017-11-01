@@ -21,7 +21,7 @@ function changeTable() {
         "ajax": '/titulacion/trabajo/notas-titulacion/',
         "columns": [
 
-            {data: 'TEMA',"searchable": false},
+            {data: 'TEMA'},
             {data: 'ESTUDIANTE'},
             {data: 'CARGO'},
             {data: 'NOTA'},
@@ -88,24 +88,6 @@ function GuardarNota() {
     else{
         alert('incorrecto');
     }
-
-    var objApiRest = new AJAXRest('/titulacion/trabajo/StoreNota/'+idestudiante+'/'+idtesis, {
-        MATRICULA_ID: id,
-        NOTA_COMPLEXIVO: $("#NotaeComplexivo").val(),
-        NOTA_GRACIA: $("#NotaGracia").val(),
-    }, 'post');
-    objApiRest.extractDataAjax(function (_resultContent) {
-        if (_resultContent.status == 200) {
-            //$('#AdmMateriasCursos').dataTable()._fnAjaxUpdate();
-            alertToastSuccess(_resultContent.message, 3500);
-            $('#ModalNotasComplexivo').modal('hide');
-            var Carrera_id = $("#cmbCarrera").val();
-            changeDatatable(Carrera_id);
-        } else {
-            alertToast(_resultContent.message, 3500);
-        }
-    });
-
 
 }
 
