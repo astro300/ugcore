@@ -3,10 +3,10 @@
     Registro de Examen complexivo
 @endsection
 @section('masterTitleModule')
-    EXAMEN COMPLEXIVO
+    NOTAS GENERAL DE TRABAJO DE TITULACIÓN
 @endsection
 @section('masterDescription')
-    Pantalla de registro de notas de examen  complexivo
+    Pantalla de registro de todas las notas titulación
 @endsection
 
 @section('mainContent')
@@ -19,33 +19,26 @@
     </div>
     <div class="col-lg-12">
         <div class="table-responsive">
-            <table class="table table-bordered bg-white" id="dtExamenComplexivo">
+            <table class="table table-bordered bg-white" id="dtNotasGenTitu">
                 <thead>
 
-                <th>Facultad</th>
-                <th>Carrera</th>
-                <th>Nombre</th>
-
-                <th>Nota Complexivo</th>
-                <th>nota Gracia</th>
-
+                <th>Trabajo</th>
+                <th>Estudiante</th>
+                <th>Nota Tutor</th>
+                <th>Nota Revisor</th>
+                <th>Nota Sustentación</th>
                 <th>Nota Final</th>
-                <th>Observación</th>
                 <th>Actions</th>
 
                 </thead>
-                <tbody id="tbobyExamenComplexivo">
+                <tbody id="tbobyNotasGenTitu">
 
                 </tbody>
             </table>
         </div>
     </div>
 
-    {{--<div class="col-lg-12 form-group text-left">--}}
-        {{--{!! Form::button('<b><i class="glyphicon glyphicon-plus"></i></b> Nuevo', array('type' => 'button', 'class' => 'btn btn-success','id' => "btnNuevo", 'data-toggle'=>"modal",'data-target'=>"#ModalNotasComplexivo",'data-whatever'=>"@mdo")) !!}--}}
-    {{--</div>--}}
-
-    <div class="modal fade" id="ModalNotasComplexivo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal fade" id="ModalNotasGtitulacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -54,29 +47,30 @@
                     <h4 class="modal-title" id="exampleModalLabel">Edición de Notas</h4>
                 </div>
                 <div class="modal-body">
-
-                    {{ Form::hidden('idmatriculado', null,['id'=>'idmatriculado']) }}
-                    {{ Form::hidden('num_secuencia', null,['id'=>'num_secuencia']) }}
+                    {{ Form::hidden('cod_estudiante', null,['id'=>'cod_estudiante']) }}
+                    {{ Form::hidden('cod_tesis', null,['id'=>'cod_tesis']) }}
 
                     <div class="form-group">
-                        {{--{!! Field::text('nombreEstudiente', null,  ["class"=>"form-control","label"=> "Nombre:" ]) !!}--}}
+                        <label>Tema de Tesis: </label><br>
+                        {{ Form::label('tesis', null, ['id'=>'lbtesis']) }}
+                    </div>
+
+                    <div class="form-group">
                         <label>Nombres del Estudiante: </label><br>
                         {{ Form::label('estudiante', null, ['id'=>'lbnombre']) }}
                     </div>
 
-
                     <div class="form-group">
-                        {!! Field::text('NotaeComplexivo', null,  ["required"=>"required","class"=>"form-control nota","label"=> "Nota examen complexivo" ]) !!}
+                        {!! Field::text('NotaT', null,  ["required"=>"required","class"=>"form-control nota","label"=> "Nota de Tutor", "maxlength"=>"5" ]) !!}
                     </div>
 
                     <div class="form-group">
-                        {!! Field::text('NotaGracia', null,  ["class"=>"form-control nota","label"=> "Nota examen de gracia" ]) !!}
+                        {!! Field::text('NotaR', null,  ["required"=>"required","class"=>"form-control nota","label"=> "Nota de Revisor", "maxlength"=>"5" ]) !!}
                     </div>
 
                     <div class="form-group">
-                        {!! Field::textarea('observacion', null,  ["class"=>"form-control","label"=> "Obseravación","rows"=>"2"]) !!}
+                        {!! Field::text('NotaS', null,  ["required"=>"required","class"=>"form-control nota","label"=> "Nota de Sustentacion", "maxlength"=>"5" ]) !!}
                     </div>
-
 
                 </div>
                 <div class="modal-footer">
@@ -86,9 +80,6 @@
                         {!! Form::button('<b><i class="glyphicon glyphicon-remove"></i></b> Cerrar', array('type' => 'button', 'class' => 'btn btn-danger','id' => "btnCancelar", 'data-dismiss'=>"modal")) !!}
                     </div>
 
-
-                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
-                    {{--<button type="button" class="btn btn-primary">Send message</button>--}}
                 </div>
             </div>
         </div>
@@ -101,11 +92,9 @@
     {!!Html::script('plugins/datatables/jquery.dataTables.min.js')!!}
 
     <script src="{{asset('/js/modules/titulacion/CargaCarreraxFacultad.js')}}"></script>
-    <script src="{{asset('/js/modules/titulacion/examen_complexivo.js')}}"></script>
-    <script src="{{asset('/plugins/mask/jquery.mask.js')}}"></script>
-    <script>
-        $('.nota').mask("#.##0,00", {reverse: true});
-    </script>
+    <script src="{{asset('/js/modules/titulacion/notas_general_titulacion.js')}}"></script>
+
+
 
 @endsection
 @section('masterCssCustom')
